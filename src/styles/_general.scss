@@ -1,0 +1,13 @@
+.nowrap{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.clearFix{
+  &::after{
+    content: '';
+    display: block;
+    clear: both;
+    height: 0px;
+  }
+}

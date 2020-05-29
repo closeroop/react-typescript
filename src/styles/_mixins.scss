@@ -1,0 +1,18 @@
+@mixin border-bottom-1px($left: 32px, $right: 0) {
+  &::after{
+    content: '';
+    display: block;
+    position: absolute;
+    left: $left;
+    right: $right;
+    bottom: 0;
+    background-color: $color-3;
+    height: 2px;
+    @media screen and ( min-resolution: 2dppx ) {
+      transform: scaleY(.6);
+    }
+    @media screen and ( min-resolution: 3dppx ) {
+      transform: scaleY(.4);
+    }
+  }
+}

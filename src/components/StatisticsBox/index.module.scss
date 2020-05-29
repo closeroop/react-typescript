@@ -1,0 +1,53 @@
+.statistics{
+  background-color: #fff;
+  padding: .32rem;
+  letter-spacing: 0;
+  border-radius: .08rem;
+  h3{
+    font-size: .24rem;
+    color: $color-6;
+  }
+  .statis-outcome{
+    display: flex;
+    h2{
+      flex: 1;
+      font-size: .64rem;
+      color: $color-6;
+      line-height: .68rem;
+      font-weight: 600;
+      margin: 0 .12rem;
+    }
+    span{
+      width: .64rem;
+      height: .64rem;
+      border-radius: 50%;
+      text-align: center;
+      line-height: .64rem;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+  .statis-income{
+    font-size: .24rem;
+    color: $color-3;
+    display: flex;
+    padding: 0 .16rem;
+    p{
+      &:last-child{
+        margin-left: auto;
+      }
+      span{
+        margin-left: .08rem;
+        margin-right: .08rem;
+        font-size: .26rem;
+        color: $color-4;
+      }
+    }
+  }
+  .statis-chart{
+    text-align: center;
+    color: $color-gree;
+    font-size: .24rem;
+    padding: 0 .42rem;
+  }
+}
