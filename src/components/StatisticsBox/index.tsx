@@ -16,13 +16,13 @@ const StatisticsBox: FC<countProps> = props => {
 	return (
 		<section className={style.statistics}>
 			<h3>本月支出</h3>
-			<div className='statis-outcome'>
+			<div className={style.statisOutcome}>
 				<h2>{props.outcome}</h2>
 				<span>
 					<Icon name='eyeopen'></Icon>
 				</span>
 			</div>
-			<div className='statis-income'>
+			<div className={style.statisIncome}>
 				<p>
 					本月收入<span>{props.income}</span>
 				</p>
@@ -30,7 +30,7 @@ const StatisticsBox: FC<countProps> = props => {
 					预算剩余<span>{props.isSetBudget ? budget : '未设置预算'}</span>
 				</p>
 			</div>
-			<div className='statis-chart'>查看表分析</div>
+			<div className={style.statisChart}>查看表分析</div>
 		</section>
 	)
 }

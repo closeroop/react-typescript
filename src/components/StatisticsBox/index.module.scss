@@ -7,7 +7,7 @@
     font-size: .24rem;
     color: $color-6;
   }
-  .statis-outcome{
+  .statisOutcome{
     display: flex;
     h2{
       flex: 1;
@@ -27,7 +27,7 @@
       margin-bottom: auto;
     }
   }
-  .statis-income{
+  .statisIncome{
     font-size: .24rem;
     color: $color-3;
     display: flex;
@@ -44,9 +44,9 @@
       }
     }
   }
-  .statis-chart{
+  .statisChart{
     text-align: center;
-    color: $color-gree;
+    color: $color-green;
     font-size: .24rem;
     padding: 0 .42rem;
   }
