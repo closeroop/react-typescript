@@ -8,25 +8,24 @@ type IconSizes = keyof typeof IconSize
 type IconName = keyof typeof IconType
 
 interface IconConfig {
-	name?: IconName
+	name: IconName
 	size?: IconSizes
 	style?: React.CSSProperties
 }
 const Icon: React.FC<IconConfig> = props => {
 	const className = classnames([
 		'iconfont',
-		'icon-' + props.name,
+		'icon' + IconType[props.name],
 		{
 			'icon-big': props.size == IconSize.big,
 			'icon-small': props.size == IconSize.small,
 		},
 	])
-	return <i className={className}></i>
+	return <i className={className} style={props.style}></i>
 }
 Icon.propTypes = {
-	//size: PropTypes.oneOf(['normal', 'small', 'big']),
-	size: PropTypes.oneOf(IconSizeArr as IconSizes[]),
-	name: PropTypes.oneOf(IconTypeArr as IconName[]),
+	size: PropTypes.oneOf(IconSizeArr as IconSizes[]).isRequired,
+	name: PropTypes.oneOf(IconTypeArr as IconName[]).isRequired,
 	style: PropTypes.object,
 }
 

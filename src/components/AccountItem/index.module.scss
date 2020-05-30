@@ -1,0 +1,62 @@
+.accountItem{
+  display: flex;
+  align-items: center;
+  border-radius: .08rem;
+  padding: .28rem .16rem ;
+  background-color: #fff;
+}
+.itemCategory{
+  flex: 0 0 .68rem;
+  height: .68rem;
+  width: .68rem;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  line-height: .68rem;
+  font-size: 0;
+}
+.itemContent{
+  box-sizing: border-box;
+  flex: 1 1  60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 .18rem;
+  h4{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: .3rem;
+    line-height: .42rem;
+    color: $color-4;
+    font-weight: 500;
+  }
+  p{
+    margin-top: .08rem;
+    margin-bottom: 0;
+    font-size: .24rem;
+    line-height: .32rem;
+    color: $color-7;
+  }
+}
+.itemInfo{
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  text-align: right;
+  span{
+    margin-bottom: .08rem;
+    font-size: .36rem;
+    line-height: .42rem;
+    color: $color-4;
+    font-weight: 600;
+  }
+  p{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: .24rem;
+    line-height: .32rem;
+    color: $color-9;
+  }
+}

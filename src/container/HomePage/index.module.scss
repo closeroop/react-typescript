@@ -1,4 +1,61 @@
 .homePage{
-  padding: .24rem .32rem;
-  background-color: #fefefe;
+  min-height: 100%;
+  padding: .24rem .28rem;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  position: relative;
+  user-select: none;
+}
+.paymentList{
+  margin-top: .32rem;
+  padding-bottom: 1.48rem;
+}
+.paymentContent{
+  margin: 0;
+  padding: 0;
+  
+  li{
+    font-size: 0;
+    margin-bottom: .20rem;
+  }
+}
+.btnGroup{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  color: #fff;
+  text-align: center;
+  padding: 0 .32rem .42rem;
+  .addBtn{
+    margin-left: auto;
+    margin-right: .32rem;
+    background-color: darken($theme-color-green, 3%);
+    font-size: .36rem;
+    padding: 0 .58rem;
+    line-height: .96rem;
+    height: .96rem;
+    border-radius: .48rem;
+    box-shadow: 0 -2px 6px -2px $theme-color-green;
+    transition: all .3s;
+    &:active{
+      box-shadow: none;
+      background-color: darken($theme-color-green, 5%)
+    }
+  }
+  .menuBtn{
+    height: 1rem;
+    width: 1rem;
+    font-size: 0;
+    line-height: .96rem;
+    border-radius: 50%;
+    background-color: $color-blue;
+    box-shadow: 0 -2px 6px -2px $color-blue;
+    transition: all .3s;
+    &:active{
+      box-shadow: none;
+      background-color: darken($color-blue, 5%)
+    }
+  }
 }

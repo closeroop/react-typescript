@@ -1,53 +1,58 @@
 .statistics{
   background-color: #fff;
-  padding: .32rem;
-  letter-spacing: 0;
+  padding: .32rem .28rem;
+  font-size: 0;
   border-radius: .08rem;
   h3{
     font-size: .24rem;
-    color: $color-6;
+    color: $color-9;
+    margin-top: 0;
+    margin-bottom: .32rem;
+    font-weight: 500;
   }
   .statisOutcome{
     display: flex;
     h2{
       flex: 1;
-      font-size: .64rem;
-      color: $color-6;
+      font-size: .68rem;
+      color: $color-4;
       line-height: .68rem;
-      font-weight: 600;
-      margin: 0 .12rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: .24rem;
     }
     span{
-      width: .64rem;
-      height: .64rem;
+      width: .84rem;
+      height: .84rem;
+      line-height: .84rem;
+      color: $color-9;
       border-radius: 50%;
       text-align: center;
-      line-height: .64rem;
-      margin-top: auto;
+      //margin-top: auto;
       margin-bottom: auto;
+      overflow: hidden;
     }
   }
   .statisIncome{
     font-size: .24rem;
-    color: $color-3;
+    color: $color-9;
     display: flex;
-    padding: 0 .16rem;
     p{
       &:last-child{
         margin-left: auto;
       }
       span{
         margin-left: .08rem;
-        margin-right: .08rem;
-        font-size: .26rem;
-        color: $color-4;
+        font-size: .28rem;
+        color: $color-6;
+        font-weight: 650;
       }
     }
   }
   .statisChart{
     text-align: center;
-    color: $color-green;
-    font-size: .24rem;
-    padding: 0 .42rem;
+    color: $theme-color-green;
+    font-size: .26rem;
+    padding: .20rem  0 ;
   }
 }

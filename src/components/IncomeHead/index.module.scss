@@ -1,0 +1,19 @@
+.incomeHead{
+  display: flex;
+  p{
+    font-size: .28rem;
+    color: $color-6;
+    font-weight: 600;
+    margin-bottom: .24rem;
+    letter-spacing: .01rem;
+    &:last-child{
+      margin-left: .24rem;
+    }
+    span{
+      font-size: .32rem;
+      margin-left: .08rem;
+      color: $color-4;
+      font-weight: 650;
+    }
+  }
+}
