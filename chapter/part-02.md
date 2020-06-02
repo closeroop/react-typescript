@@ -15,16 +15,16 @@ interface IProps {
 }
 ```
 <li>name代表图标种类；
-<li>size代表图标的尺寸（这个还没没及样式：)）；
+<li>size代表图标的尺寸（这个还没加样式：)）；
 <li>style 是满足对图标样式的特殊需求，可以和组件的样式进行合并
 
 <b>注意：</b> 
 <li>你可以到对应文件里看看引入的 IconType, IconTypeArr, IconSize, IconSizeArr 是什么
   <ul>
     <li> IconType 是对阿里巴巴图标库下载图标名称的枚举
-    <li> IconTypeArr 阿里巴巴图标库下载图标名称的枚举的数组
+    <li> IconTypeArr 阿里巴巴图标库下载图标名称枚举值的数组
     <li> IconSize 图标大小的枚举
-    <li> IconSizeArr 图标大小的枚举的数组
+    <li> IconSizeArr 图标大小的枚举值的数组
   </ul>
 <li>size代表图标的尺寸（这个还没没及样式：)）；
 <li>style 是满足对图标样式的特殊需求，可以和组件的样式进行合并
@@ -85,7 +85,7 @@ Icon.propTypes = {
   </ul>
 
   ### 4. 接第三问，如果接口IProps写成size?: IconSizes，PropType类型验证时会怎样呢？
-  你可一直使用未进行类型定义的数组字面量，并且可以智能检测数组是否与接口字段类型值匹配
+  你可以使用未进行类型定义的数组字面量了，并且可以智能检测数组是否与接口字段类型值匹配
   ```
   PropTypes.oneOf(['small', 'big', 'normal'])
   ```

@@ -1,4 +1,7 @@
 ### 说明
+俗话说：学以致用，学了typescript不应用到实际的一个项目中，提升不会很大；刚好之前学了react相关的知识。干脆结合一下写个不大不小的应用吧。<br />
+顺便也记录下写的过程吧，感觉网上react结合typescript的教程挺少的，所以应该也会犯一些错误。<br />
+推荐一本国外react结合typescript的书，有一定基础的人看比较合适：-<a href="http://www.java1234.com/a/javabook/webbase/2018/1219/12596.html">《Learn React with TypeScript3》</a>
 <ul>
   <li>1. webApp界面参考了<b>我的记账本</b> 手机App(安卓)。App参考截图放在了snapshot目录下。
   <li>2. 项目目标是完成 `我的记账本` 的全部功能，使用typescript进行代码静态检查。
