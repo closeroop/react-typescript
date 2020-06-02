@@ -1,11 +1,23 @@
 // declare global {
-// 	interface window {
+// 	interface tools {
 // 		tools: any
 // 	}
 // }
-interface Window {
-	tools: any
+type formatTimType = 1 | 2 | 3 | 4
+interface ITools {
+	formatMoney: (money?: number | string, gapTag?: string, decimal?: number, gap?: number) => string
+	formatTime: (data: number, type?: formatTimType) => string
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	_debounce: (fn: (...arg: any[]) => any, gap: number | undefined) => any
 }
+type toolFunc<T> = {
+	[K in keyof T]: T[K]
+}
+interface Window {
+	tools: toolFunc<ITools>
+}
+declare const tools: toolFunc<ITools>
+
 declare enum IconType {
 	note = 'youji',
 	search = 'sousuo',

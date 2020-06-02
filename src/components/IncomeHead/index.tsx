@@ -1,7 +1,6 @@
 import React from 'react'
 import style from './index.module.scss'
 import PropType from 'prop-types'
-import tool from '../../util/tool'
 
 interface IProps {
 	todayIncome?: number
@@ -12,10 +11,10 @@ const IncomeHead: React.FC<IProps> = props => {
 	return (
 		<div className={style.incomeHead}>
 			<p>
-				今日支出<span>{'¥' + tool.formatMoney(props.todayOutcome)}</span>
+				今日支出<span>{'¥' + tools.formatMoney(props.todayOutcome)}</span>
 			</p>
 			<p>
-				收入<span>{'¥' + tool.formatMoney(props.todayIncome)}</span>
+				收入<span>{'¥' + tools.formatMoney(props.todayIncome)}</span>
 			</p>
 		</div>
 	)

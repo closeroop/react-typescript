@@ -5,14 +5,14 @@ import classnames from 'classnames'
 import { IconType, IconTypeArr, IconSize, IconSizeArr } from './iconTypes'
 
 type IconSizes = keyof typeof IconSize
-type IconName = keyof typeof IconType
+type IconNames = keyof typeof IconType
 
-interface IconConfig {
-	name: IconName
+interface IProps {
+	name: IconNames
 	size?: IconSizes
 	style?: React.CSSProperties
 }
-const Icon: React.FC<IconConfig> = props => {
+const Icon: React.FC<IProps> = props => {
 	const className = classnames([
 		'iconfont',
 		'icon' + IconType[props.name],
@@ -24,8 +24,8 @@ const Icon: React.FC<IconConfig> = props => {
 	return <i className={className} style={props.style}></i>
 }
 Icon.propTypes = {
-	size: PropTypes.oneOf(IconSizeArr as IconSizes[]).isRequired,
-	name: PropTypes.oneOf(IconTypeArr as IconName[]).isRequired,
+	name: PropTypes.oneOf(IconTypeArr).isRequired,
+	size: PropTypes.oneOf(IconSizeArr),
 	style: PropTypes.object,
 }
 

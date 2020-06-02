@@ -8,7 +8,7 @@ const App: React.FC = () => {
 	return (
 		<Router>
 			<Route path='/' exact component={HomePage}></Route>
-			<Route path='/Addaccount' exact component={Addaccount}></Route>
+			<Route path='/AddAccount' exact component={Addaccount}></Route>
 			<Route path='/AccountDetail/:id' exact component={AccountDetail}></Route>
 		</Router>
 	)

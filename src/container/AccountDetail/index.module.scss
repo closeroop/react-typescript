@@ -1,0 +1,52 @@
+.detail{
+  min-height: 100%;
+  padding: .24rem .12rem;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  position: relative;
+  user-select: none;
+  scroll-behavior: smooth;
+}
+.detailList{
+  background-color: #fff;
+  border-radius: 0.08rem;
+  overflow: hidden;
+}
+.listItem{
+  font-size: .32rem;
+  color: $color-3;
+  padding: .32rem .24rem;
+  display: flex;
+  line-height: .48rem;
+  &.topBorder{
+    @include border-top-1px(.28rem, .12rem);
+  }
+}
+.itemLeft{
+  flex: 1 0 20%;
+}
+.itemRight{
+  flex: 1 0 60%;
+  font-size: .26rem;
+  color: $color-6;
+  text-align: right;
+}
+.footerBtn{
+  all: unset;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: .34rem;
+  line-height: 1rem;
+  font-weight: 650;
+  background-color: #fff;
+  color: $color-green;
+  box-shadow: -4px 0 10px -2px $color-D;
+  transition: all ease-in-out .3s;
+  &:active{
+    box-shadow: -2px 0 6px -2px $color-E;
+    background-color: $color-E;
+  }
+}

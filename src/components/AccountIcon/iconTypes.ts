@@ -76,7 +76,7 @@ export enum IconType {
 	jianyuede = 'jianyuede',
 	goback = 'fanhui',
 }
-export const IconTypeArr = [
+export const IconTypeArr: (keyof typeof IconType)[] = [
 	'note',
 	'search',
 	'editV2',
@@ -119,4 +119,4 @@ export enum IconSize {
 	big = 'big',
 	normal = 'normal',
 }
-export const IconSizeArr = ['small', 'big', 'normal']
+export const IconSizeArr: (keyof typeof IconSize)[] = [IconSize.big, IconSize.small, IconSize.normal]

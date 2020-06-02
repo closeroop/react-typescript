@@ -3,7 +3,6 @@ import propTypes from 'prop-types'
 
 import style from './index.module.scss'
 import Icon from './../AccountIcon/index'
-import tool from '../../util/tool'
 
 interface countProps {
 	income?: number
@@ -18,7 +17,7 @@ const StatisticsBox: FC<countProps> = props => {
 		<section className={style.statistics}>
 			<h3>本月支出</h3>
 			<div className={style.statisOutcome}>
-				<h2>{showMoney ? '¥' + tool.formatMoney(props.outcome) : '****'}</h2>
+				<h2>{showMoney ? '¥' + tools.formatMoney(props.outcome) : '****'}</h2>
 				<span
 					onClick={() => {
 						setShowState(!showMoney)
@@ -32,11 +31,11 @@ const StatisticsBox: FC<countProps> = props => {
 			</div>
 			<div className={style.statisIncome}>
 				<p>
-					本月收入<span>{showMoney ? '¥' + tool.formatMoney(props.income) : '****'}</span>
+					本月收入<span>{showMoney ? '¥' + tools.formatMoney(props.income) : '****'}</span>
 				</p>
 				<p>
 					预算剩余
-					<span>{showMoney ? (props.isSetBudget ? '¥' + tool.formatMoney(props.budget) : '未设置预算') : '****'}</span>
+					<span>{showMoney ? (props.isSetBudget ? '¥' + tools.formatMoney(props.budget) : '未设置预算') : '****'}</span>
 				</p>
 			</div>
 			<div className={style.statisChart}>
