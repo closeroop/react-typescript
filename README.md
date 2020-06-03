@@ -29,6 +29,6 @@
 <ul>
   <li> <a href="./chapter/part-01.md"> 1. 项目目录结构安排 </a> 
   <li> <a href="./chapter/part-02.md">2. 项目图标选择和Icon组件编写</a> 
-  <li> 3. 首页头部支出收入编写
+  <li> <a href="./chapter/part-03.md">3. 首页头部支出收入编写</a> 
   <li> 4. 工具函数tools编写（根据需要添加新函数）
 </ul>
