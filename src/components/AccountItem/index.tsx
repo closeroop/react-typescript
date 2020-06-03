@@ -44,7 +44,8 @@ const AccountItem: React.FC<IProps> = props => {
 				{props.note ? <p>{props.note}</p> : null}
 			</div>
 			<div className={style.itemInfo}>
-				<span>{(props.paymentType === 2 ? '-' : '+') + tools.formatMoney(props.moeny)}</span>
+				{/* <span>{(props.paymentType === 2 ? '-' : '+') + tools.formatMoney(props.moeny)}</span> */}
+				<span>{'¥' + tools.formatMoney(props.moeny)}</span>
 				{props.time ? <p>{tools.formatTime(props.time)}</p> : null}
 			</div>
 		</div>

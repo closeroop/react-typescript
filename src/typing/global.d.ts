@@ -46,7 +46,7 @@ declare enum IconType {
 	glodcoinsv2 = 'qian',
 	xingcheng = 'xingcheng',
 	washin = 'xiyiji',
-	shoping = 'gouwu',
+	shopping = 'gouwu',
 	think = 'renwen',
 	delete = 'shanchu',
 	setting = 'shezhi',

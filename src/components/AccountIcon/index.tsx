@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import './index.scss'
 
 import { IconType, IconTypeArr, IconSize, IconSizeArr } from './iconTypes'
 
@@ -13,14 +14,12 @@ interface IProps {
 	style?: React.CSSProperties
 }
 const Icon: React.FC<IProps> = props => {
-	const className = classnames([
-		'iconfont',
-		'icon' + IconType[props.name],
-		{
-			'icon-big': props.size == IconSize.big,
-			'icon-small': props.size == IconSize.small,
-		},
-	])
+	const className = classnames({
+		iconfont: true,
+		['icon' + IconType[props.name]]: true,
+		'icon-big': props.size == IconSize.big,
+		'icon-small': props.size == IconSize.small,
+	})
 	return <i className={className} style={props.style}></i>
 }
 Icon.propTypes = {

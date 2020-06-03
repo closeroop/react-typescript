@@ -22,12 +22,10 @@ interface IProps {
 <li>你可以到对应文件里看看引入的 IconType, IconTypeArr, IconSize, IconSizeArr 是什么
   <ul>
     <li> IconType 是对阿里巴巴图标库下载图标名称的枚举
-    <li> IconTypeArr 阿里巴巴图标库下载图标名称枚举值的数组
+    <li> IconTypeArr 阿里巴巴图标库下载图标名称枚举名的数组
     <li> IconSize 图标大小的枚举
-    <li> IconSizeArr 图标大小的枚举值的数组
+    <li> IconSizeArr 图标大小的枚举名的数组
   </ul>
-<li>size代表图标的尺寸（这个还没没及样式：)）；
-<li>style 是满足对图标样式的特殊需求，可以和组件的样式进行合并
 
 #### 2. 组间无状态
 由于Icon目前只是一个展示型组间，添加状态会使组间有点冗余
@@ -37,7 +35,7 @@ const Icon: React.FC<IProps> = props => {
 }
 ```
 #### 3. 使用PropTypes类型检查可能遇到的问题
-由于我们定义了组间props数据的接口IProps使用了它，因此使用PropTypes进行类型检查时会默认与IProps中定义的类型进行比较。如果我们在接口中使用了 <b>联合类型</b>、<b>枚举类型</b> 等非基本类型（number、string 等），类型检查时若不做一些处理，就会报错。举个栗子(骚味完整点吧)：
+由于我们定义了组件props数据的接口IProps，并使用了它，因此使用PropTypes进行类型检查时会默认与IProps中定义的类型进行比较。如果我们在接口中使用了 <b>联合类型</b>、<b>枚举类型</b> 等非基本类型（number、string 等），在类型检查时若不做一些处理，就会报错。举个栗子：
 
 ```
 enum IconSize {
@@ -80,8 +78,8 @@ Icon.propTypes = {
       1. 对传入的数组赋予类型（推荐）<br />
       const iconSizeArr:IconSizes[] = ['small', 'big', 'normal']<br />
       // todo <br />
-      size: PropTypes.oneOf(iconSizeArr).isRequired,
-      iconSizeArr数组的内容必须是IconSizes列举的联合类型中的值，同时你还会发现，修改iconSizeArr中任意一个值，若不在联合类型值范围中就会报错。
+      size: PropTypes.oneOf(iconSizeArr).isRequired<br />
+      iconSizeArr 数组的内容必须是IconSizes列举的联合类型中的值，同时你还会发现，修改iconSizeArr中任意一个值，若不在联合类型值范围中就会报错。
   </ul>
 
   ### 4. 接第三问，如果接口IProps写成size?: IconSizes，PropType类型验证时会怎样呢？
@@ -89,7 +87,7 @@ Icon.propTypes = {
   ```
   PropTypes.oneOf(['small', 'big', 'normal'])
   ```
-  鼠标移到oneOF函数上能正常解析类型
+  鼠标移到oneOf函数上能正常解析类型
   ```
   function oneOf<"small" | "big" | "normal">(types: readonly ("small" | "big" | "normal")[]): PropTypes.Requireable<"small" | "big" | "normal">
   ```

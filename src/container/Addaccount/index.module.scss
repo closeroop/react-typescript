@@ -1,0 +1,14 @@
+.addAccount{
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  position: relative;
+  user-select: none;
+  scroll-behavior: smooth;
+  overflow: hidden;
+  .addDetail{
+    margin-top: .24rem;
+    background-color: #FFF;
+    padding: 0 .12rem;
+  }
+}
