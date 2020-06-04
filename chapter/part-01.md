@@ -3,8 +3,9 @@
   <li> components 存放通用组价
     <ul>
       <li> AccountIcon 图标组件
-      <li> AccountItem 条目组件
-      <li> IncomeHead 收支组件
+      <li> AccountItem 账目信息组件
+      <li> AccountSwiper 包含图标的Swiper组件
+      <li> IncomeHead 简易收支金额描述组件
       <li> StatisticsBox 首页头部金额展示组件
     </ul>
   <li> container 多页面的容器
@@ -14,6 +15,10 @@
       <li> AccountDetail 收支详情页
     </ul>
   <li> moke 模拟数据文件夹
+    <ul>
+      <li> categories.js 图标数据
+      <li> paymentList.js 记账数据
+    </ul>
   <li> styles 全局通用样式
     <ul>
       <li> _general.scss
@@ -32,6 +37,11 @@
       <li> tool.ts
       <li> index.ts
     </ul>
-  <li> App 路由
-  <li> index 入口文件
+  <li> App.tsx 路由逻辑文件
+    <ul>
+      <li> path='/' 丨 component={HomePage}
+      <li>  path='/AddAccount' 丨 component={Addaccount}
+      <li>  path='/AccountDetail/:id' 丨 component={AccountDetail}
+    </ul>
+  <li> index.tsx 入口文件
 </ul>

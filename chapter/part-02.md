@@ -11,7 +11,7 @@ type IconNames = keyof typeof IconType // 太长不展示
 interface IProps {
 	name: IconNames
 	size?: IconSizes
-	style?: React.CSSProperties
+	style?: React.CSSProperties 
 }
 ```
 <li>name代表图标种类；
@@ -31,7 +31,13 @@ interface IProps {
 由于Icon目前只是一个展示型组间，添加状态会使组间有点冗余
 ```
 const Icon: React.FC<IProps> = props => {
-	// TODO
+	const className = classnames({
+		iconfont: true,
+		['icon' + IconType[props.name]]: true,
+		'icon-big': props.size == IconSize.big,
+		'icon-small': props.size == IconSize.small,
+	})
+	return <i className={className} style={props.style}></i>
 }
 ```
 #### 3. 使用PropTypes类型检查可能遇到的问题

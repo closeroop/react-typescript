@@ -4,20 +4,21 @@ import propTypes from 'prop-types'
 import style from './index.module.scss'
 import Icon from './../AccountIcon/index'
 
-interface countProps {
+interface IStatisticsProps {
 	income?: number
 	outcome?: number
 	isSetBudget?: boolean //预算
 	budget?: number
 }
 
-const StatisticsBox: FC<countProps> = props => {
+const StatisticsBox: FC<IStatisticsProps> = props => {
 	const [showMoney, setShowState] = useState(true)
 	return (
 		<section className={style.statistics}>
 			<h3>本月支出</h3>
 			<div className={style.statisOutcome}>
 				<h2>{showMoney ? '¥' + tools.formatMoney(props.outcome) : '****'}</h2>
+				{/* tools 是全局声明对象，实体对象在util文件里编写完成并在项目初始化时注入到了全局window下， */}
 				<span
 					onClick={() => {
 						setShowState(!showMoney)
