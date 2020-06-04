@@ -5,6 +5,7 @@ import AccountItem from './../../components/AccountItem'
 
 import { IProps as PaymentProps } from './../../components/AccountItem'
 
+// 测试 后期改动
 const testData: PaymentProps = {
 	id: 1590824611383,
 	category: '话费',
@@ -12,14 +13,8 @@ const testData: PaymentProps = {
 	paymentType: 2,
 	moeny: 30,
 }
-const testData2 = {
-	id: 1590824611383,
-	category: '话费',
-	icon: 'phone',
-	paymentType: 2,
-	time: 1590824611383,
-	moeny: 30,
-}
+const time = 1590824611383
+
 // 为RouteComponentProps传递带有id的match接口，否者使用id会报错
 interface IRouteProps {
 	id?: string
@@ -48,7 +43,7 @@ class HomePage extends Component<RouteComponentProps<IRouteProps>> {
 					</div>
 					<div className={style.listItem}>
 						<div className={style.itemLeft}>时间</div>
-						<div className={style.itemRight}>{tools.formatTime(testData2.time)}</div>
+						<div className={style.itemRight}>{tools.formatTime(time)}</div>
 					</div>
 				</section>
 				<button

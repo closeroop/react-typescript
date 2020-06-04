@@ -1,13 +1,28 @@
-function formatMoney(money: number | string = 0, gapTag = ',', decimal = 2, gap = 3): string {
+function formatMoney(money: number | string = 0, gapTag = ',', gap = 3, decimal = 2): string {
+	if (isNaN(Number(money))) {
+		return '0.00'
+	}
 	if (typeof money === 'number') {
 		money = String(money)
 	}
-	const length = money.length
-	const debrisArr = []
-	for (let i = 0; i <= length - 1; i += gap) {
-		debrisArr.push(money.substr(i, gap))
+	let length = money.length
+	let formatResult = ''
+	let isMatchDot = false
+	if (money.match(/\./g)) {
+		length = money.split('.')[0].length
+		isMatchDot = true
 	}
-	return debrisArr.join(gapTag) + '.' + '0'.repeat(decimal)
+	for (let i = length, j = 1; i >= 1; i--, j++) {
+		if (j % gap === 0 && j !== length) {
+			formatResult = gapTag + money[i - 1] + formatResult
+		} else {
+			formatResult = money[i - 1] + formatResult
+		}
+	}
+	if (!isMatchDot) {
+		return formatResult + '.' + '0'.repeat(decimal)
+	}
+	return formatResult + '.' + Number(money).toFixed(decimal).split('.')[1]
 }
 
 function addZero(number: number | string) {
@@ -16,14 +31,14 @@ function addZero(number: number | string) {
 }
 /**
  *
- * @param data 时间戳
+ * @param date 时间戳
  * @param type 1-> 00月00日 2. 今天 00:00  3->0000年00月00日 4->0000年00月00日 00:00:00 5-> 自定义(暂时不上)
  * @param format YYYY-MM-DD hh:mm:ss (暂时不上)
  */
 type formatTimType = 1 | 2 | 3 | 4
-function formatTime(data: number, type: formatTimType = 1): string {
+function formatTime(date: number, type: formatTimType = 1): string {
 	// const reg = /(Y{4})[:-](M{2})[:-]?(D{2})\s+(h{0,2})[:-]?(m{0,2})[:-]?(s{0,2})/i
-	const time = new Date(data)
+	const time = new Date(date)
 	const year = time.getFullYear(),
 		month = addZero(time.getMonth() + 1),
 		day = addZero(time.getDate()),
@@ -45,7 +60,7 @@ function formatTime(data: number, type: formatTimType = 1): string {
 			timeText = year + '年' + month + '月' + day + '日 ' + hours + ':' + minutes + ':' + seconds
 			break
 		default:
-			timeText = data + ''
+			timeText = date + ''
 	}
 	return timeText
 }

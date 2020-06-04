@@ -36,7 +36,7 @@ class Addaccount extends Component<RouteComponentProps, Istate> {
 		this.state = {
 			currentIconId: '0002',
 			paymentType: 2,
-			moeny: 0,
+			moeny: 10,
 			currentCategory: '吃饭',
 			currentIcon: 'food',
 		}
