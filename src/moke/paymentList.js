@@ -5,7 +5,7 @@ export default [
 		icon: 'phone',
 		paymentType: 2,
 		time: 1590824611383,
-		moeny: 30,
+		moeny: '30',
 	},
 	{
 		id: 1590824610383,
@@ -13,7 +13,7 @@ export default [
 		icon: 'food',
 		paymentType: 2,
 		time: 1590824610383,
-		moeny: 12,
+		moeny: '12',
 		note: '在乡村基吃大米先生',
 	},
 	{
@@ -22,7 +22,7 @@ export default [
 		icon: 'wage',
 		paymentType: 1,
 		time: 1590824601383,
-		moeny: 3000,
+		moeny: '3000',
 		note: '搬砖工资',
 	},
 	{
@@ -31,7 +31,7 @@ export default [
 		icon: 'relax',
 		paymentType: 2,
 		time: 1590824601183,
-		moeny: 20,
+		moeny: '20',
 	},
 	{
 		id: 1590824601083,
@@ -39,7 +39,7 @@ export default [
 		icon: 'bus',
 		paymentType: 2,
 		time: 1590824601083,
-		moeny: 2,
+		moeny: '2',
 	},
 	{
 		id: 1590824600183,
@@ -47,7 +47,7 @@ export default [
 		icon: 'redpaket',
 		paymentType: 1,
 		time: 1590824600183,
-		moeny: 200,
+		moeny: '200',
 		note: '舅舅给的零用钱',
 	},
 ]

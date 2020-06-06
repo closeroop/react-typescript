@@ -34,9 +34,9 @@ class HomePage extends Component<RouteComponentProps> {
 			todayOutcome = 0
 		_paymentData.forEach(item => {
 			if (item.paymentType === paymentType.Income) {
-				todayIncome += item.moeny
+				todayIncome += +item.moeny
 			} else {
-				todayOutcome += item.moeny
+				todayOutcome += +item.moeny
 			}
 		})
 		return (

@@ -19,8 +19,9 @@ export interface IProps {
 	category: string //账目种类中文名 
 	icon: keyof typeof IconType // IconType是Icon名的枚举，完整查看引入路径
 	paymentType: paymentType
-	moeny: number
+	moeny: string
 	time?: number  // 取的时间戳
+	formatMoney?: boolean
 	note?: string
 	onClick?: (id: number | string) => void
 }

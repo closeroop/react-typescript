@@ -27,7 +27,9 @@
 6.关于其他配置，脚手架已经做的很完善了，可根据自己要求自己拓展。<br /> 
 <b>注：2-6步骤不是必须的！</b>
 
-### <b>进程</b>
+### <b>进度</b>
+  <a href="./chapter/part-00.md">目前的开发进度截图</a>
+### <b>文档</b>
 <ul>
   <li> <a href="./chapter/part-01.md">1. 项目目录结构安排 </a> 
   <li> <a href="./chapter/part-02.md">2. 项目图标选择和 AccountIcon 组件编写</a> 
@@ -36,9 +38,8 @@
   <li> <a href="./chapter/part-05.md">5. 工具函数tools编写，全局挂载以及全局声明（根据需要添加新函数）</a> 
   <li> <a href="./src/container/HomePage/index.tsx">6. 首页组装 </a>
   <li> <a href="./chapter/part-07.md">7. 详情页面编写</a>
-  <li> 8. 添加和修改账目页状态，接口设计，组装分析
-  <li> 9. 添加和修改账目页之 Swiper 组件编写
-  <li> 10. 添加和修改账目页之 keyboard 组件编写
-  <li> 11. 添加和修改账目页之 tab 组件编写
-  <li> 12. 添加和修改账目页之组件联动
+  <li> <a href="./chapter/part-08.md">8. 添加和修改页分析</a>
+  <li> <a href="./chapter/part-09.md">9. 添加和修改页之 swiper 组件封装</a>
+  <li> <a href="./chapter/part-10.md">10. 添加和修改页之 keyboard 组件编写</a>
+  <li> 11. 添加和修改页之 tab 组件编写
 </ul>

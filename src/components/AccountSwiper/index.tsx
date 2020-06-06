@@ -17,7 +17,7 @@ interface IconProps {
 
 interface Iprops {
 	iconArr: IconProps[]
-	currentIconId: string
+	currentIconId?: string
 	onIconClick?: (id: string) => void
 }
 
@@ -37,8 +37,9 @@ const AccountSwiper: React.FC<Iprops> = props => {
 		setIconId(id)
 	}
 	useEffect(() => {
-		setIconId(props.currentIconId)
-		console.log(props.iconArr, swiperPage)
+		if (typeof props.currentIconId !== 'undefined') {
+			setIconId(props.currentIconId)
+		}
 	}, [])
 	return (
 		<Swiper {...swiperParams}>
@@ -69,7 +70,7 @@ const AccountSwiper: React.FC<Iprops> = props => {
 
 AccountSwiper.propTypes = {
 	iconArr: PropType.array.isRequired,
-	currentIconId: PropType.string.isRequired,
+	currentIconId: PropType.string,
 	onIconClick: PropType.func,
 }
 

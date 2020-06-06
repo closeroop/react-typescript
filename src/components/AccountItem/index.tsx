@@ -19,9 +19,10 @@ export interface IProps {
 	category: string //种类
 	icon: keyof typeof IconType
 	paymentType: paymentType
-	moeny: number
+	moeny: string
 	time?: number
 	note?: string
+	formatMoney?: boolean
 	onClick?: (id: number | string) => void
 }
 
@@ -45,11 +46,14 @@ const AccountItem: React.FC<IProps> = props => {
 			</div>
 			<div className={style.itemInfo}>
 				{/* <span>{(props.paymentType === 2 ? '-' : '+') + tools.formatMoney(props.moeny)}</span> */}
-				<span>{'¥' + tools.formatMoney(props.moeny)}</span>
+				<span>{'¥' + (props.formatMoney ? tools.formatMoney(props.moeny) : props.moeny)}</span>
 				{props.time ? <p>{tools.formatTime(props.time)}</p> : null}
 			</div>
 		</div>
 	)
+}
+AccountItem.defaultProps = {
+	formatMoney: true,
 }
 
 AccountItem.propTypes = {
@@ -57,8 +61,9 @@ AccountItem.propTypes = {
 	category: PropType.string.isRequired,
 	icon: PropType.oneOf(IconTypeArr).isRequired,
 	paymentType: PropType.oneOf(paymentTypeArr).isRequired,
-	moeny: PropType.number.isRequired,
+	moeny: PropType.string.isRequired,
 	time: PropType.number,
+	formatMoney: PropType.bool,
 	note: PropType.string,
 	onClick: PropType.func,
 }

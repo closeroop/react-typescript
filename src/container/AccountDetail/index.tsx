@@ -11,7 +11,7 @@ const testData: PaymentProps = {
 	category: '话费',
 	icon: 'phone',
 	paymentType: 2,
-	moeny: 30,
+	moeny: '30',
 }
 const time = 1590824611383
 

@@ -9,6 +9,12 @@
   .addDetail{
     margin-top: .24rem;
     background-color: #FFF;
-    padding: 0 .12rem;
+    // padding: 0 .12rem;
+  }
+  .addFooter{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }
