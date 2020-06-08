@@ -22,7 +22,7 @@ enum dutyType {
 }
 
 // interface MouseEvent extends React.MouseEvent {
-// 	target: HTMLInputElement & EventTarget
+// 	target: HTMLUListElement & EventTarget
 // }
 
 const KeyBoard: React.FC<Iprops> = props => {
@@ -46,11 +46,13 @@ const KeyBoard: React.FC<Iprops> = props => {
 			props.onConfirm()
 		}
 	}
-	const handleClick = (e: any): void => {
-		console.log(e.target.dataset)
+	// React.SyntheticEvent<HTMLUListElement>
+	const handleClick = (e: React.MouseEvent<HTMLUListElement>): void => {
+		const dataset = (e.target as HTMLUListElement).dataset
+		console.log(dataset)
 		e.stopPropagation()
-		if (e.target.dataset && e.target.dataset.duty) {
-			switch (e.target.dataset.duty) {
+		if (dataset && dataset.duty) {
+			switch (dataset.duty) {
 				case dutyType.Clear:
 					handleClear()
 					break
@@ -62,8 +64,8 @@ const KeyBoard: React.FC<Iprops> = props => {
 					break
 			}
 		}
-		if (e.target.dataset && e.target.dataset.value) {
-			const value = e.target.dataset.value
+		if (dataset && dataset.value) {
+			const value = dataset.value
 			handleNumber(value)
 		}
 	}

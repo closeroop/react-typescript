@@ -19,10 +19,12 @@ interface Iprops {
 	iconArr: IconProps[]
 	currentIconId?: string
 	onIconClick?: (id: string) => void
+	ItemClass?: string
 }
 
 const AccountSwiper: React.FC<Iprops> = props => {
-	const [currentIconId, setIconId] = useState('0001')
+	const [currentIconId, setIconId] = useState(props.currentIconId ? props.currentIconId : props.iconArr[0].id)
+	const activeClass = props.ItemClass ? props.ItemClass : style.iconActive
 	const swiperParams = {
 		pagination: {
 			el: '.swiper-pagination',
@@ -36,11 +38,11 @@ const AccountSwiper: React.FC<Iprops> = props => {
 		}
 		setIconId(id)
 	}
-	useEffect(() => {
-		if (typeof props.currentIconId !== 'undefined') {
-			setIconId(props.currentIconId)
-		}
-	}, [])
+	// useEffect(() => {
+	// 	if (typeof props.currentIconId !== 'undefined') {
+	// 		setIconId(props.currentIconId)
+	// 	}
+	// }, [])
 	return (
 		<Swiper {...swiperParams}>
 			{swiperPage.map((index, key) => (
@@ -53,9 +55,8 @@ const AccountSwiper: React.FC<Iprops> = props => {
 								handleIconClick(item.id)
 							}}>
 							<div
-								className={classnames({
-									[style.iconActive]: currentIconId === item.id,
-									[style.iconBox]: true,
+								className={classnames(style.iconBox, {
+									[activeClass]: currentIconId === item.id,
 								})}>
 								<Icon name={item.icon} size='big' />
 							</div>
@@ -72,6 +73,7 @@ AccountSwiper.propTypes = {
 	iconArr: PropType.array.isRequired,
 	currentIconId: PropType.string,
 	onIconClick: PropType.func,
+	ItemClass: PropType.string,
 }
 
 export default AccountSwiper

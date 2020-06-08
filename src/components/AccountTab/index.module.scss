@@ -1,0 +1,32 @@
+.tabItem{
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .28rem;
+  font-weight: 700;
+  color: $color-9;
+  padding: .12rem .32rem;
+  min-height: 0.96rem;
+  flex: auto;
+  &.actived{
+    color: $color-3;
+  }
+}
+.tabContainer{
+  font-size: 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.tabLine{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: .04rem;
+  border-radius: .02rem;
+  background-color: $color-3;
+  transition: left ease-in-out .2s;
+}
