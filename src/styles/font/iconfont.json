@@ -6,6 +6,20 @@
   "description": "记账本",
   "glyphs": [
     {
+      "icon_id": "90843",
+      "name": "clothes",
+      "font_class": "clothes",
+      "unicode": "e717",
+      "unicode_decimal": 59159
+    },
+    {
+      "icon_id": "13671627",
+      "name": "删除",
+      "font_class": "shanchu1",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
       "icon_id": "833471",
       "name": "attention_forbid_fill",
       "font_class": "attentionforbidfill",

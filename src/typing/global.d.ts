@@ -54,6 +54,7 @@ declare enum IconType {
 	wage = 'gaoxiaofei',
 	jianyuede = 'jianyuede',
 	goback = 'fanhui',
+	deletev2 = 'shanchu1',
 }
 
 declare enum paymentType {

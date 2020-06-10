@@ -39,12 +39,17 @@ KeyBoard.defaultProps = {
 
 #### 代码编写
 代码部分就是 keyboard 的html页面布局和css，以及处理接口中的事件。<br />
-但是有一个问题我没能解决：<br />
-如何定义点击事件的回调中 event 的类型，让我能够书写 event.target.dataset 不会报错。目前定义的event类型为 any 。<br />
-目前，当我点击键盘的时候，控制台打出的信息：
+但是有一个问题我感觉解决的不是很完美：<br />
+如何定义点击事件的回调中 event 的类型，让我能够书写 event.target.dataset 不会报错。查阅网上的资料，按以下写法进行了定义。
 ```
-	DOMStringMap {value: "5"}
+	/**
+	 * 
+	 * @React.MouseEvent<HTMLUListElement> 因为我把点击事件委托给了ul元素
+	 */
+	const handleClick = (e: React.MouseEvent<HTMLUListElement>): void => {
+		const dataset = (e.target as HTMLUListElement).dataset
+	}
 ```
-应该可以从 DOMStringMap 下手。
+如果有更好的写法，欢迎留言
 
 传送门：<a href="./../src/components/KeyBoard/index.tsx"> keyboard 组件</a> <br />

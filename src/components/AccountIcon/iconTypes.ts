@@ -75,6 +75,7 @@ export enum IconType {
 	wage = 'gaoxiaofei',
 	jianyuede = 'jianyuede',
 	goback = 'fanhui',
+	deletev2 = 'shanchu1',
 }
 export const IconTypeArr: (keyof typeof IconType)[] = [
 	'note',
@@ -113,6 +114,7 @@ export const IconTypeArr: (keyof typeof IconType)[] = [
 	'wage',
 	'jianyuede',
 	'goback',
+	'deletev2',
 ]
 export enum IconSize {
 	small = 'small',

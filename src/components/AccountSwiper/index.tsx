@@ -24,7 +24,7 @@ interface Iprops {
 
 const AccountSwiper: React.FC<Iprops> = props => {
 	const [currentIconId, setIconId] = useState(props.currentIconId ? props.currentIconId : props.iconArr[0].id)
-	console.log('sw', props.currentIconId ? props.currentIconId : props.iconArr[0].id)
+	// console.log('sw', props.currentIconId ? props.currentIconId : props.iconArr[0].id)
 	const activeClass = props.ItemClass ? props.ItemClass : style.iconActive
 	const swiperParams = {
 		pagination: {
@@ -82,7 +82,7 @@ export default memo(AccountSwiper, function (pre, next) {
 		pre.currentIconId,
 		next.currentIconId,
 		'Swiper',
-		!(pre.currentIconId !== next.currentIconId) ? '渲染了' : '没渲染'
+		pre.currentIconId === next.currentIconId ? '没渲染' : '渲染了'
 	)
-	return !(pre.currentIconId !== next.currentIconId)
+	return pre.currentIconId === next.currentIconId
 })

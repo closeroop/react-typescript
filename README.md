@@ -41,5 +41,7 @@
   <li> <a href="./chapter/part-08.md">8. 添加和修改页分析</a>
   <li> <a href="./chapter/part-09.md">9. 添加和修改页之 swiper 组件封装</a>
   <li> <a href="./chapter/part-10.md">10. 添加和修改页之 keyboard 组件编写</a>
-  <li> 11. 添加和修改页之 tab 组件编写
+  <li> <a href="./chapter/part-11.md">11. 添加和修改页之 tab 组件编写</a>
+  <li> 12. 添加和修改页之 组件联动
+  <li> 13. 账单记录页分析和编写
 </ul>

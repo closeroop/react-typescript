@@ -81,7 +81,7 @@ const KeyBoard: React.FC<Iprops> = props => {
 				<li data-value='3'>3</li>
 				<li className={style.deleted}>
 					<div data-duty={dutyType.Deleted} className={style.iconMask}></div>
-					<Icon name='goback' style={{ zIndex: 10 }} />
+					<Icon name='deletev2' style={{ zIndex: 10 }} size='big' />
 				</li>
 				<li data-value='4'>4</li>
 				<li data-value='5'>5</li>

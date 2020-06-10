@@ -8,7 +8,7 @@ import 'swiper/css/swiper.css'
 import AccountItem from './../../components/AccountItem'
 import AccountSwiper from './../../components/AccountSwiper'
 import KeyBoard from './../../components/KeyBoard'
-import AccTab, { TabItem } from './../../components/AccountTab'
+import Tab, { TabItem } from './../../components/AccountTab'
 
 import ItemList from './../../moke/categories'
 import { paymentType as PaymentType } from './../../components/AccountItem/index'
@@ -22,6 +22,7 @@ interface Istate {
 	moeny: string
 	category: string
 	icon: keyof typeof IconType
+	time: number
 }
 
 type IstateUnite = {
@@ -45,6 +46,7 @@ const routeDate: Istate = {
 	moeny: '30',
 	category: '吃饭',
 	icon: 'food',
+	time: 1591753275699,
 }
 const currentSwiper = 0
 const type = '2'
@@ -63,6 +65,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 				moeny: '',
 				category: '',
 				icon: 'food',
+				time: 0,
 			},
 			outcome: {
 				id: '',
@@ -70,6 +73,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 				moeny: '',
 				category: '',
 				icon: 'food',
+				time: 0,
 			},
 			currentSwiper: 0, // 后期路由判断
 		}
@@ -100,6 +104,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 			moeny: '0',
 			category: this.incomeCategories[0].name,
 			icon: this.incomeCategories[0].icon,
+			time: Date.now(),
 		}
 		let outcome: Istate = {
 			id: this.outcomeCategories[0].id,
@@ -107,6 +112,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 			moeny: '0',
 			category: this.outcomeCategories[0].name,
 			icon: this.outcomeCategories[0].icon,
+			time: Date.now(),
 		}
 		if (Number(type)) {
 			if (type === '2') {
@@ -116,6 +122,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 					moeny: routeDate.moeny,
 					category: routeDate.category,
 					icon: routeDate.icon,
+					time: routeDate.time,
 				}
 			} else {
 				income = {
@@ -124,6 +131,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 					moeny: routeDate.moeny,
 					category: routeDate.category,
 					icon: routeDate.icon,
+					time: routeDate.time,
 				}
 			}
 		}
@@ -209,13 +217,15 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 			swiperEl.slideTo(0)
 		}
 	}
+	// shouldComponentUpdate(nextProps: RouteComponentProps, nextState: IstateUnite): boolean {
+	// 	return nextState.currentSwiper !== this.state.currentSwiper
+	// }
 	render(): JSX.Element {
 		const { income, outcome, currentSwiper } = this.state
-		console.log(currentSwiper, 'Addaccount', Date.now())
 		return (
 			<div className={style.addAccount}>
 				<div className={style.header}>
-					<AccTab
+					<Tab
 						current={currentSwiper}
 						classes={style.headerTab}
 						onChange={(infos: { value: string | number; label: string }) => {
@@ -223,12 +233,12 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 						}}>
 						<TabItem value={PaymentType.Outcome} label='支出' />
 						<TabItem value={PaymentType.Income} label='收入' />
-					</AccTab>
+					</Tab>
 				</div>
 				<Swiper {...this.swiperParams}>
 					<section className={style.addDetail}>
 						<div style={{ padding: '0 .12rem', backgroundColor: '#fff' }}>
-							<AccountItem {...outcome} formatMoney={false} />
+							<AccountItem {...outcome} formatMoney={false} time={undefined} />
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
@@ -237,6 +247,16 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 							ItemClass={style.outcomeActive}
 						/>
 						<div className={style.addFooter}>
+							<div
+								style={{
+									fontSize: '.28rem',
+									lineHeight: '.6rem',
+									backgroundColor: '#fefefe',
+									textAlign: 'right',
+									padding: '.12rem .26rem',
+								}}>
+								{tools.formatTime(outcome.time, 4)}
+							</div>
 							<KeyBoard
 								okBtnColor='#07C160'
 								okFontColor='#fff'
@@ -253,7 +273,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 					</section>
 					<section className={style.addDetail}>
 						<div style={{ padding: '0 .12rem', backgroundColor: '#fff' }}>
-							<AccountItem {...income} formatMoney={false} />
+							<AccountItem {...income} formatMoney={false} time={undefined} />
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
@@ -262,6 +282,16 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 							ItemClass={style.incomeActive}
 						/>
 						<div className={style.addFooter}>
+							<div
+								style={{
+									fontSize: '.28rem',
+									lineHeight: '.6rem',
+									backgroundColor: '#fefefe',
+									textAlign: 'right',
+									padding: '.12rem .26rem',
+								}}>
+								{tools.formatTime(income.time, 4)}
+							</div>
 							<KeyBoard
 								okBtnColor='#ffd31a'
 								okFontColor='#fff'

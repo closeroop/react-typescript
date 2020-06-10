@@ -1,4 +1,4 @@
-import React, { useContext, useState, memo, useEffect, useRef } from 'react'
+import React, { useContext, useState, memo, useEffect } from 'react'
 import PropType from 'prop-types'
 import classnames from 'classnames'
 
@@ -30,12 +30,15 @@ interface ITabItem {
 	disable?: boolean
 	classes?: string
 	style?: React.CSSProperties
-	children?: React.ReactNode
+	children?: React.ReactElement[]
 }
-
+/**
+ * React.memo 仅检查 props 变更。如果函数组件被 React.memo 包裹，
+ * 且其实现中拥有 useState 或 useContext 的 Hook，当 context 发生变化时，它仍会重新渲染。
+ * 所以， current 变化的话 TabItem都会渲染的
+ */
 export const TabItem: React.FC<ITabItem> = memo(
 	props => {
-		console.log('emit  TabItem', props.id)
 		const { handleTabItemClick, current, onChange } = useContext(TabContext)
 		const className = classnames(props.classes ? props.classes : '', style.tabItem, {
 			[style.actived]: props.id === current,
@@ -53,8 +56,8 @@ export const TabItem: React.FC<ITabItem> = memo(
 		)
 	},
 	function (pre, next) {
-		console.log(pre.id, next.id, 'TabItem', !(pre.id !== next.id) ? '渲染了' : '没渲染')
-		return !(pre.id !== next.id)
+		// console.log(pre.id, next.id, 'TabItem', '渲没渲染, memo可能说了不算')
+		return pre.id === next.id
 	}
 )
 
@@ -84,12 +87,11 @@ interface ITab {
 }
 
 const Tab: React.FC<ITab> = props => {
-	console.log('emit  Tab', props.current)
 	const lineWidth = props.children ? 100 / props.children.length : 0
 	const [current, setCurrent] = useState(props.current ? props.current : 0)
 	const [lineLeft, setLineLeft] = useState(props.current ? props.current * lineWidth : 0)
 	const className = classnames(props.classes ? props.classes : '', style.tabContainer)
-	console.log(current, lineLeft, 'tab')
+	// console.log(current, lineLeft, 'current&lineLeft Tab')
 	useEffect(() => {
 		if (typeof props.current !== 'undefined' && props.current !== current) {
 			handleTabItemClick(props.current)
@@ -127,6 +129,7 @@ Tab.propTypes = {
 }
 
 export default memo(Tab, function (pre, next) {
-	console.log(pre.current, next.current, 'Tab', pre.current !== next.current ? '渲染了' : '没渲染')
-	return pre.current !== next.current
+	console.log(pre.current, next.current, 'Tab', pre.current === next.current ? '没渲染' : '渲染了')
+	// return true if you do not want to render
+	return pre.current === next.current
 })
