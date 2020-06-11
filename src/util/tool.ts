@@ -82,4 +82,21 @@ function _debounce(fn: (...arg: any[]) => any, gap = 200): any {
 	}
 }
 
-export default { formatMoney, formatTime, _debounce }
+function qs(needQsData: { [index: string]: any }): string {
+	const qsSttring: string[] = []
+	Object.keys(needQsData).forEach(key => {
+		qsSttring.push(`${key}=${needQsData[key]}`)
+	})
+	return qsSttring.join('&')
+}
+
+function parseUrlSearch(search: string): { [index: string]: string } {
+	const parse = {} as { [index: string]: string }
+	const searchParams = new URLSearchParams(search)
+	searchParams.forEach((value, key) => {
+		parse[key] = value
+	})
+	return parse
+}
+
+export default { formatMoney, formatTime, _debounce, qs, parseUrlSearch }

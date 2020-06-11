@@ -13,6 +13,10 @@ import { paymentType } from './../../components/AccountItem/index'
 // 测试数据
 import paymentData from './../../moke/paymentList'
 
+//改良后的数据
+import { betterData } from './../../moke/paymentList'
+import categories from './../../moke/categories'
+
 console.log(paymentData)
 
 class HomePage extends Component<RouteComponentProps> {
@@ -26,7 +30,8 @@ class HomePage extends Component<RouteComponentProps> {
 		}
 	}
 	handleItemClick = (id: number | string): void => {
-		this.props.history.push(`/AccountDetail/${id}`)
+		const queryData = paymentData.find(item => item.id === id)
+		this.props.history.push(`/AccountDetail/${id}?` + tools.qs(queryData ? queryData : {}))
 	}
 	render(): JSX.Element {
 		const _paymentData = paymentData as PaymentProps[]

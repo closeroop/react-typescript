@@ -39,23 +39,12 @@ interface IqueryProps {
 const iconArr = ItemList as IconArr[]
 let swiperEl: any
 
-// 模拟路由传的参
-const routeDate: Istate = {
-	id: '0002',
-	paymentType: 2,
-	moeny: '30',
-	category: '吃饭',
-	icon: 'food',
-	time: 1591753275699,
-}
-const currentSwiper = 0
-const type = '2'
-
 class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 	incomeCategories: IconArr[] = []
 	outcomeCategories: IconArr[] = []
 	moneyMaxLength: number
 	swiperParams: any
+	queryData: any
 	constructor(props: RouteComponentProps) {
 		super(props)
 		this.state = {
@@ -77,18 +66,22 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 			},
 			currentSwiper: 0, // 后期路由判断
 		}
-		// this.currentSwiper = this.props.match
 		this.moneyMaxLength = 9
 		this.breakCategory()
+		this.queryData = tools.parseUrlSearch(this.props.location.search)
 		this.swiperParams = {
 			containerClass: style.swiperContainer,
 			getSwiper($el: any) {
-				console.log($el)
 				swiperEl = $el
 			},
 			on: {
 				slideChange: () => {
 					this.setState({ currentSwiper: swiperEl.activeIndex })
+				},
+				init: () => {
+					// if (this.queryData.type == '1') {
+					// 	swiperEl.slideTo(1, 200)
+					// }
 				},
 			},
 		}
@@ -97,6 +90,8 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 		this.initPage()
 	}
 	initPage = (): void => {
+		console.log(tools.parseUrlSearch(this.props.location.search))
+		const queryData = this.queryData
 		// 0-new 1-income 2-outcome
 		let income: Istate = {
 			id: this.incomeCategories[0].id,
@@ -114,31 +109,37 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 			icon: this.outcomeCategories[0].icon,
 			time: Date.now(),
 		}
-		if (Number(type)) {
-			if (type === '2') {
+		if (queryData.type !== '0') {
+			if (queryData.type === '2') {
 				outcome = {
-					id: routeDate.id,
-					paymentType: routeDate.paymentType,
-					moeny: routeDate.moeny,
-					category: routeDate.category,
-					icon: routeDate.icon,
-					time: routeDate.time,
+					id: queryData.id,
+					paymentType: +queryData.paymentType,
+					moeny: queryData.moeny,
+					category: queryData.category,
+					icon: queryData.icon as keyof typeof IconType,
+					time: +queryData.time,
 				}
 			} else {
 				income = {
-					id: routeDate.id,
-					paymentType: routeDate.paymentType,
-					moeny: routeDate.moeny,
-					category: routeDate.category,
-					icon: routeDate.icon,
-					time: routeDate.time,
+					id: queryData.id,
+					paymentType: +queryData.paymentType,
+					moeny: queryData.moeny,
+					category: queryData.category,
+					icon: queryData.icon as keyof typeof IconType,
+					time: +queryData.time,
 				}
 			}
 		}
 		this.setState({
 			income,
 			outcome,
+			currentSwiper: queryData.type == '1' ? 1 : 0,
 		})
+		if (this.queryData.type == '1') {
+			setTimeout(() => {
+				swiperEl.slideTo(1)
+			}, 0)
+		}
 	}
 	handleSelected = (slectItem: IconProps): void => {
 		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
@@ -183,13 +184,8 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 		this.state.currentSwiper === 1 ? this.setState({ income: newData }) : this.setState({ outcome: newData })
 	}
 	handleDeleted = (clearFlag = false): void => {
-		let moeny
 		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
-		if (this.state.currentSwiper === 1) {
-			moeny = this.state.income.moeny
-		} else {
-			moeny = this.state.outcome.moeny
-		}
+		let moeny = this.state[currentType].moeny
 		const newData: Istate = JSON.parse(JSON.stringify(this.state[currentType]))
 		if (clearFlag) {
 			newData.moeny = '0'

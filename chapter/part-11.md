@@ -47,11 +47,11 @@ interface ITabItem {
 	<li>style: 额外的style样式</li>
 	<li>classes: TabItem 的 classname 类名</li>
 	<li>icon: 内容图标</li>
-	<li>children: 传入自定义内容（还没做这个）</li>
+	<li>children: 传入自定义内容（目前使用的label，这个之后做兼容）</li>
 </ul>
 
-### <b>关联 TabItem 和 Tab </b>
-使用 hook的 useContext 函数，配和 React.createContext 函数，将两者链接起来。
+#### 关联 TabItem 和 Tab
+使用 hook的 useContext 函数，配和 React.createContext 函数，将两者联系起来。
 
 首先定义如下接口
 ```
@@ -70,6 +70,21 @@ type ITabContext = {
 使用 TabContext.Provider 包裹需要共享数据的组件，  然后在组价内使用 useContext 获取数据和方法。
 
 #### 代码编写
+需要注意的地方： <br />
+我们希望 Tab 组件只包裹 TabItem 组件，如果遇到其他的组件则不不渲染，我们可以通过给 TabItem 组件添加 dispalyName 属性，然后在父组件 Tab 里判断
+```
+React.Children.map(props.children, (child, index) => {
+	const childElement = child as React.FunctionComponentElement<ITabItem>
+	const { displayName } = childElement.type
+	if (displayName === 'TabItem') {
+		return React.cloneElement(child, {
+			id: index,
+		})
+	} else {
+		console.error('only render TabItem components!')
+	}
+})
+```
 
 完成后发现，即使被 memo 函数包裹的 TabItem 组件传入的参数没有改变，也会更新，翻阅网站发现：
 

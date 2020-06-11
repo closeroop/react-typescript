@@ -9,8 +9,8 @@ import 'swiper/css/swiper.css'
 import style from './index.module.scss'
 
 type ITabContext = {
-	handleTabItemClick: (id: number) => void
 	current: number
+	handleTabItemClick: (id: number) => void
 	onChange?: (infos: { value: string | number; label: string }) => void
 }
 
@@ -19,7 +19,6 @@ const TabContext = React.createContext<ITabContext>({
 		console.log(id)
 	},
 	current: 0,
-	onChange: undefined,
 })
 
 interface ITabItem {
@@ -61,6 +60,8 @@ export const TabItem: React.FC<ITabItem> = memo(
 	}
 )
 
+TabItem.displayName = 'TabItem'
+
 TabItem.defaultProps = {
 	label: 'Tab',
 	value: '',
@@ -92,6 +93,8 @@ const Tab: React.FC<ITab> = props => {
 	const [lineLeft, setLineLeft] = useState(props.current ? props.current * lineWidth : 0)
 	const className = classnames(props.classes ? props.classes : '', style.tabContainer)
 	// console.log(current, lineLeft, 'current&lineLeft Tab')
+	// 如果你不需要从外部改变 ITab 组件 的 current 状态， useEffect其实是不用添加的， 但是这里我们需要。
+	// 考虑到这些 onChange 回调 便不合适 放在 useEffect 里执行了
 	useEffect(() => {
 		if (typeof props.current !== 'undefined' && props.current !== current) {
 			handleTabItemClick(props.current)
@@ -105,11 +108,17 @@ const Tab: React.FC<ITab> = props => {
 		<div className={className}>
 			<TabContext.Provider value={{ current, handleTabItemClick, onChange: props.onChange }}>
 				{React.Children.map(props.children, (child, index) => {
-					return React.cloneElement(child, {
-						id: index,
-					})
+					const childElement = child as React.FunctionComponentElement<ITabItem>
+					const { displayName } = childElement.type
+					// Filter other elements by displayName
+					if (displayName === 'TabItem') {
+						return React.cloneElement(child, {
+							id: index,
+						})
+					} else {
+						console.error('only render TabItem components!')
+					}
 				})}
-				{/* {props.children ? props.children : null} */}
 			</TabContext.Provider>
 			<span style={{ width: lineWidth + '%', left: lineLeft + '%' }} className={style.tabLine}></span>
 		</div>

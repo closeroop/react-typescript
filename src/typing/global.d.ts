@@ -9,6 +9,8 @@ interface ITools {
 	formatTime: (date: number, type?: formatTimType) => string
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	_debounce: (fn: (...arg: any[]) => any, gap: number | undefined) => any
+	qs: (needQsData: { [index: string]: any }) => string
+	parseUrlSearch(search: string): { [index: string]: string }
 }
 
 interface Window {
