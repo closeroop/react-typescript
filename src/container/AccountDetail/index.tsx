@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import style from './index.module.scss'
+import withContent from './../withContext'
+
 import AccountItem from './../../components/AccountItem'
 
 import { IProps as PaymentProps } from './../../components/AccountItem'
+import { IAppContext, IAcount, ICategory } from './../../App'
 
 // 为RouteComponentProps传递带有id的match接口，否者使用id会报错
+
 interface IRouteProps {
 	id?: string
 }
 
-class HomePage extends Component<RouteComponentProps<IRouteProps>> {
+class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppContext> {
 	queryData: any
-	constructor(props: RouteComponentProps) {
+	constructor(props: RouteComponentProps & IAppContext) {
 		super(props)
 		this.state = {
 			id: this.props.match.params.id,
@@ -61,4 +65,4 @@ class HomePage extends Component<RouteComponentProps<IRouteProps>> {
 	}
 }
 
-export default HomePage
+export default withContent(AccountDetail)

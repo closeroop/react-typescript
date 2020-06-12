@@ -1,5 +1,5 @@
 import React from 'react'
-import PropType from 'prop-types'
+import PropType, { object } from 'prop-types'
 import classnames from 'classnames'
 
 import style from './index.module.scss'
@@ -23,7 +23,7 @@ export interface IProps {
 	time?: number
 	note?: string
 	formatMoney?: boolean
-	onClick?: (id: number | string) => void
+	onClick?: (item: IProps) => void
 }
 
 const AccountItem: React.FC<IProps> = props => {
@@ -31,12 +31,22 @@ const AccountItem: React.FC<IProps> = props => {
 		'theme-grean-bgColor': props.paymentType === paymentType.Outcome,
 		'theme-yellow-bgColor': props.paymentType === paymentType.Income,
 	})
+	function handleItemClick() {
+		if (props.onClick && typeof props.onClick === 'function') {
+			const item: IProps = {
+				id: props.id,
+				category: props.category,
+				icon: props.icon,
+				paymentType: props.paymentType,
+				moeny: props.moeny,
+				time: props.time,
+				note: props.note ? props.note : '',
+			}
+			props.onClick(item)
+		}
+	}
 	return (
-		<div
-			className={style.accountItem}
-			onClick={() => {
-				props.onClick && typeof props.onClick === 'function' ? props.onClick(props.id) : ''
-			}}>
+		<div className={style.accountItem} onClick={handleItemClick}>
 			<div className={iconColor}>
 				<Icon name={props.icon} style={{ fontSize: '.36rem' }} />
 			</div>

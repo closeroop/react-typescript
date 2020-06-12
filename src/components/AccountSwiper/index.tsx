@@ -4,21 +4,15 @@ import classnames from 'classnames'
 import Swiper from 'react-id-swiper'
 
 import Icon from './../../components/AccountIcon'
+import { ICategory } from './../../App'
 
 import 'swiper/css/swiper.css'
 import style from './index.module.scss'
 
-export interface IconProps {
-	id: string
-	name: string
-	type: number
-	icon: keyof typeof IconType
-}
-
 interface Iprops {
-	iconArr: IconProps[]
+	iconArr: ICategory[]
 	currentIconId?: string | number
-	onIconClick?: (item: IconProps) => void
+	onIconClick?: (item: ICategory) => void
 	ItemClass?: string
 }
 
@@ -33,7 +27,7 @@ const AccountSwiper: React.FC<Iprops> = props => {
 		},
 	}
 	const swiperPage = Array(Math.ceil(props.iconArr.length / 10) | 0).fill(0)
-	function handleIconClick(iconInfo: IconProps): void {
+	function handleIconClick(iconInfo: ICategory): void {
 		if (props.onIconClick && typeof props.onIconClick === 'function') {
 			props.onIconClick(iconInfo)
 		}

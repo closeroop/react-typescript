@@ -11,6 +11,7 @@ interface ITools {
 	_debounce: (fn: (...arg: any[]) => any, gap: number | undefined) => any
 	qs: (needQsData: { [index: string]: any }) => string
 	parseUrlSearch(search: string): { [index: string]: string }
+	flatternArr: <U, T extends keyof U>(array: U[], attribute: T) => any
 }
 
 interface Window {

@@ -71,6 +71,6 @@ export const betterData = [
 		time: 1590824601383,
 		moeny: '3000',
 		note: '搬砖的工资啊',
-		cid: '0013',
+		cid: '0014',
 	},
 ]

@@ -99,4 +99,11 @@ function parseUrlSearch(search: string): { [index: string]: string } {
 	return parse
 }
 
-export default { formatMoney, formatTime, _debounce, qs, parseUrlSearch }
+function flatternArr<U, T extends keyof U>(array: U[], attribute: T): any {
+	return array.reduce((pre, cur) => {
+		pre[cur[attribute]] = cur
+		return pre
+	}, {} as any)
+}
+
+export default { formatMoney, formatTime, _debounce, qs, parseUrlSearch, flatternArr }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import style from './index.module.scss'
+import withContent from './../withContext'
 // 组件
 import StatisticsBox from './../../components/StatisticsBox'
 import IncomeHead from './../../components/IncomeHead'
@@ -9,48 +10,56 @@ import Icon from './../../components/AccountIcon'
 // Interface
 import { IProps as PaymentProps } from './../../components/AccountItem'
 import { paymentType } from './../../components/AccountItem/index'
+import { IProps as ItemIProps } from './../../components/AccountItem/index'
+import { IAppContext, IAcount, ICategory } from './../../App'
 
-// 测试数据
-import paymentData from './../../moke/paymentList'
+type IHomeProps = RouteComponentProps & IAppContext
 
-//改良后的数据
-import { betterData } from './../../moke/paymentList'
-import categories from './../../moke/categories'
-
-console.log(paymentData)
-
-class HomePage extends Component<RouteComponentProps> {
+class HomePage extends Component<IHomeProps> {
 	public state: {
-		name: string
+		accountData: any[]
+		categories: any[]
 	}
-	constructor(props: RouteComponentProps) {
+	constructor(props: IHomeProps) {
 		super(props)
 		this.state = {
-			name: '',
+			accountData: props.accountTable.accountList,
+			categories: tools.flatternArr(props.accountTable.category, 'id'),
 		}
 	}
-	handleItemClick = (id: number | string): void => {
-		const queryData = paymentData.find(item => item.id === id)
-		this.props.history.push(`/AccountDetail/${id}?` + tools.qs(queryData ? queryData : {}))
+	handleItemClick = (item: ItemIProps): void => {
+		const icon = this.props.accountTable.category.find(_item => _item.icon == item.icon)
+		this.props.history.push(`/AccountDetail/${item.id}?` + tools.qs(Object.assign(item, { cid: icon?.id })))
+	}
+	addAccount = (): void => {
+		this.props.history.push(`/AddAccount?type=0`)
 	}
 	render(): JSX.Element {
-		const _paymentData = paymentData as PaymentProps[]
 		let todayIncome = 0,
 			todayOutcome = 0
-		_paymentData.forEach(item => {
-			if (item.paymentType === paymentType.Income) {
+		const itemWithCate: PaymentProps[] = this.state.accountData.map(item => {
+			// eslint-disable-next-line prettier/prettier
+			(item as any).category = this.state.categories[item.cid].name;
+			// eslint-disable-next-line prettier/prettier
+			(item as any).icon = this.state.categories[item.cid].icon;
+			// eslint-disable-next-line prettier/prettier
+			(item as any).paymentType = this.state.categories[item.cid].type
+			if ((item as any).paymentType === paymentType.Income) {
 				todayIncome += +item.moeny
 			} else {
 				todayOutcome += +item.moeny
 			}
+			return item
 		})
+		console.log(itemWithCate)
+		//
 		return (
 			<div className={style.homePage}>
 				<StatisticsBox />
 				<div className={style.paymentList}>
 					<IncomeHead todayIncome={todayIncome} todayOutcome={todayOutcome} />
 					<ul className={style.paymentContent}>
-						{_paymentData.map(item => (
+						{itemWithCate.map(item => (
 							<li key={item.id}>
 								<AccountItem {...item} onClick={this.handleItemClick} />
 							</li>
@@ -58,7 +67,7 @@ class HomePage extends Component<RouteComponentProps> {
 					</ul>
 				</div>
 				<div className={style.btnGroup}>
-					<div className={style.addBtn}>
+					<div className={style.addBtn} onClick={this.addAccount}>
 						<Icon name='edit' />
 						记一笔
 					</div>
@@ -71,4 +80,4 @@ class HomePage extends Component<RouteComponentProps> {
 	}
 }
 
-export default HomePage
+export default withContent(HomePage)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import Swiper from 'react-id-swiper'
+import withContent from './../withContext'
 
 import style from './index.module.scss'
 import 'swiper/css/swiper.css'
@@ -10,11 +11,10 @@ import AccountSwiper from './../../components/AccountSwiper'
 import KeyBoard from './../../components/KeyBoard'
 import Tab, { TabItem } from './../../components/AccountTab'
 
-import ItemList from './../../moke/categories'
 import { paymentType as PaymentType } from './../../components/AccountItem/index'
-import { IconProps } from './../../components/AccountSwiper/index'
+import { IAppContext, ICategory } from './../../App'
 
-type IconArr = IconProps
+type IAddOrModProps = RouteComponentProps & IAppContext
 
 interface Istate {
 	id: number | string
@@ -23,6 +23,7 @@ interface Istate {
 	category: string
 	icon: keyof typeof IconType
 	time: number
+	note?: string
 }
 
 type IstateUnite = {
@@ -31,21 +32,16 @@ type IstateUnite = {
 	currentSwiper: number
 }
 
-interface IqueryProps {
-	type: string // 0-new 1-outcome 2-income
-	[index: string]: string
-}
-
-const iconArr = ItemList as IconArr[]
 let swiperEl: any
 
-class Addaccount extends Component<RouteComponentProps, IstateUnite> {
-	incomeCategories: IconArr[] = []
-	outcomeCategories: IconArr[] = []
+class Addaccount extends Component<IAddOrModProps, IstateUnite> {
+	incomeCategories: ICategory[] = []
+	outcomeCategories: ICategory[] = []
 	moneyMaxLength: number
 	swiperParams: any
 	queryData: any
-	constructor(props: RouteComponentProps) {
+	iconId: any
+	constructor(props: IAddOrModProps) {
 		super(props)
 		this.state = {
 			income: {
@@ -69,6 +65,10 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 		this.moneyMaxLength = 9
 		this.breakCategory()
 		this.queryData = tools.parseUrlSearch(this.props.location.search)
+		this.iconId = {
+			income: this.queryData.type === '0' || this.queryData.type === '2' ? undefined : this.queryData.cid,
+			outcome: this.queryData.type === '0' || this.queryData.type === '1' ? undefined : this.queryData.cid,
+		}
 		this.swiperParams = {
 			containerClass: style.swiperContainer,
 			getSwiper($el: any) {
@@ -77,11 +77,6 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 			on: {
 				slideChange: () => {
 					this.setState({ currentSwiper: swiperEl.activeIndex })
-				},
-				init: () => {
-					// if (this.queryData.type == '1') {
-					// 	swiperEl.slideTo(1, 200)
-					// }
 				},
 			},
 		}
@@ -141,9 +136,10 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 			}, 0)
 		}
 	}
-	handleSelected = (slectItem: IconProps): void => {
+	handleSelected = (slectItem: ICategory): void => {
 		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
 		const newData: Istate = JSON.parse(JSON.stringify(this.state[currentType]))
+		this.iconId[currentType] = slectItem.id
 		newData.id = slectItem.id
 		newData.category = slectItem.name
 		newData.paymentType = slectItem.type
@@ -151,7 +147,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 		this.state.currentSwiper === 1 ? this.setState({ income: newData }) : this.setState({ outcome: newData })
 	}
 	breakCategory = (): void => {
-		iconArr.forEach(item => {
+		this.props.accountTable.category.forEach(item => {
 			if (item.type === PaymentType.Income) {
 				this.incomeCategories.push(item)
 			} else {
@@ -203,6 +199,38 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 		}
 	}
 	handleConfirm = (): void => {
+		const { addAccountItem, updateAccountItem } = this.props.actions
+		const _outcome = {
+			id: this.state.outcome.id,
+			time: this.state.outcome.time,
+			moeny: this.state.outcome.moeny,
+			cid: this.iconId.outcome,
+		}
+		const _income = {
+			id: this.state.income.id,
+			time: this.state.income.time,
+			moeny: this.state.income.moeny,
+			cid: this.iconId.income,
+		}
+		if (this.queryData.type === '0') {
+			if (this.state.currentSwiper === 0) {
+				addAccountItem(_outcome)
+			} else {
+				addAccountItem(_income)
+			}
+		} else if (this.queryData.type === '1') {
+			if (this.state.currentSwiper === 0) {
+				addAccountItem(_outcome)
+			} else {
+				addAccountItem(_income)
+			}
+		} else {
+			if (this.state.currentSwiper === 0) {
+				updateAccountItem(_outcome)
+			} else {
+				addAccountItem(_income)
+			}
+		}
 		this.props.history.go(-2)
 	}
 	handleTabChange = (infos: { value: string | number; label: string }): void => {
@@ -238,7 +266,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
-							currentIconId={outcome.id}
+							currentIconId={this.iconId.outcome}
 							iconArr={this.outcomeCategories}
 							ItemClass={style.outcomeActive}
 						/>
@@ -273,7 +301,7 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
-							currentIconId={income.id}
+							currentIconId={this.iconId.income}
 							iconArr={this.incomeCategories}
 							ItemClass={style.incomeActive}
 						/>
@@ -308,4 +336,4 @@ class Addaccount extends Component<RouteComponentProps, IstateUnite> {
 	}
 }
 
-export default Addaccount
+export default withContent(Addaccount)
