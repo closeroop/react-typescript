@@ -36,8 +36,11 @@ function addZero(number: number | string) {
  * @param format YYYY-MM-DD hh:mm:ss (暂时不上)
  */
 type formatTimType = 1 | 2 | 3 | 4
-function formatTime(date: number, type: formatTimType = 1): string {
+function formatTime(date: number | undefined, type: formatTimType = 1): string {
 	// const reg = /(Y{4})[:-](M{2})[:-]?(D{2})\s+(h{0,2})[:-]?(m{0,2})[:-]?(s{0,2})/i
+	if (typeof date === 'undefined') {
+		date = Date.now()
+	}
 	const time = new Date(date)
 	const year = time.getFullYear(),
 		month = addZero(time.getMonth() + 1),

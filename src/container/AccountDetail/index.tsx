@@ -18,9 +18,9 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 	queryData: any
 	constructor(props: RouteComponentProps & IAppContext) {
 		super(props)
-		this.state = {
-			id: this.props.match.params.id,
-		}
+		// this.state = {
+		// 	id: this.props.match.params.id,
+		// }
 		this.queryData = tools.parseUrlSearch(props.location.search)
 		console.log(this.queryData, 's')
 	}

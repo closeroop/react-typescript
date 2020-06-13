@@ -20,19 +20,53 @@ function formatMoney(money: number | string = 0, gapTag = ',', decimal = 2, gap 
 #### 1.2 时间格式化函数
 ```
 type formatTimType = 1 | 2 | 3 | 4
-function formatTime(date: number, type: formatTimType = 1): string {
+function formatTime(date: number | undefine, type: formatTimType = 1): string {
   // TODO
 }
 ```
 参数说明：<br />
 <ul>
-  <li> date：时间戳
+  <li> date：时间戳，传入 undefine 时 默认当前时间的时间戳
   <li> type：转换结果的类型
 </ul>
 
 #### 1.3 防抖函数（按钮点击用）
 ```
 function _debounce(fn: (...arg: any[]) => any, gap = 200): any {
+  // TODO
+}
+```
+参数说明：<br />
+<ul>
+  <li>fn：被防抖的函数
+  <li>gap：防抖时间间隔
+</ul>
+
+#### 1.4 序列化对象 {a:1,b:2} => a=1&b=2
+```
+qs: (needQsData: { [index: string]: any }) => string {
+  // TODO
+}
+```
+参数说明：<br />
+<ul>
+  <li>needQsData：一个对象
+</ul>
+
+#### 1.5 解析序列化对象字符串 a=1&b=2  => {a:1,b:2}
+```
+function parseUrlSearch(search: string): { [index: string]: string } {
+  // TODO
+}
+```
+参数说明：<br />
+<ul>
+  <li>search：序列化对象字符串
+</ul>
+
+#### 1.6 装换对象数组（名字不知道怎么起）[{id: 01, type: 2}] => {01: {id: 01, type: 2}}
+```
+function flatternArr<U, T extends keyof U>(array: U[], attribute: T): any {
   // TODO
 }
 ```

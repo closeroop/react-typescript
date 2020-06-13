@@ -9,14 +9,14 @@ import categories from './moke/categories'
 
 export interface IAcount {
 	id: number | string
-	time: number
 	moeny: string
-	cid: string
+	cid: number | string
+	time?: number
 	note?: string
 }
 
 export interface ICategory {
-	id: string
+	id: string | number
 	name: string
 	type: paymentType
 	icon: keyof typeof IconType
@@ -40,13 +40,13 @@ export const AppContext = React.createContext<IAppContext>({
 		category: [],
 	},
 	actions: {
-		addAccountItem: (item: IAcount): void => {
+		addAccountItem: (): void => {
 			return
 		},
-		delAccountItem: (id: number | string): void => {
+		delAccountItem: (): void => {
 			return
 		},
-		updateAccountItem: (item: IAcount): void => {
+		updateAccountItem: (): void => {
 			return
 		},
 	},

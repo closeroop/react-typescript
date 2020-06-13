@@ -1,5 +1,5 @@
 import React from 'react'
-import PropType, { object } from 'prop-types'
+import PropType from 'prop-types'
 import classnames from 'classnames'
 
 import style from './index.module.scss'

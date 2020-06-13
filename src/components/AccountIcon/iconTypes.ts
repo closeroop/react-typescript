@@ -78,6 +78,7 @@ export enum IconType {
 	deletev2 = 'shanchu1',
 }
 export const IconTypeArr: (keyof typeof IconType)[] = [
+	'eyeclose',
 	'note',
 	'search',
 	'editV2',

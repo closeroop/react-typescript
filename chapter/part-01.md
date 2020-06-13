@@ -7,6 +7,8 @@
       <li> AccountSwiper 包含图标的Swiper组件
       <li> IncomeHead 简易收支金额描述组件
       <li> StatisticsBox 首页头部金额展示组件
+      <li> AccountTab Tab 组件
+      <li> KeyBoard 键盘组件
     </ul>
   <li> container 多页面的容器
     <ul>

@@ -6,7 +6,7 @@
 import { IconType, IconTypeArr, IconSize, IconSizeArr } from './iconTypes'
 
 type IconSizes = keyof typeof IconSize //type IconSizes = "small" | "big" | "normal"
-type IconNames = keyof typeof IconType // 太长不展示
+type IconNames = keyof typeof IconType 
 
 interface IProps {
 	name: IconNames

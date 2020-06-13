@@ -3,6 +3,7 @@
   padding: .32rem .28rem;
   font-size: 0;
   border-radius: .08rem;
+  box-shadow: 0 2px 5px -1px rgb(245, 244, 244);
   h3{
     font-size: .24rem;
     color: $color-9;
@@ -53,6 +54,6 @@
     text-align: center;
     color: $theme-color-green;
     font-size: .26rem;
-    padding: .20rem  0 ;
+    padding: .28rem  0 ;
   }
 }

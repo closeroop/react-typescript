@@ -11,24 +11,14 @@ import AccountSwiper from './../../components/AccountSwiper'
 import KeyBoard from './../../components/KeyBoard'
 import Tab, { TabItem } from './../../components/AccountTab'
 
-import { paymentType as PaymentType } from './../../components/AccountItem/index'
+import { paymentType as PaymentType, IProps as IAcounDetailtProps } from './../../components/AccountItem/index'
 import { IAppContext, ICategory } from './../../App'
 
 type IAddOrModProps = RouteComponentProps & IAppContext
 
-interface Istate {
-	id: number | string
-	paymentType: PaymentType
-	moeny: string
-	category: string
-	icon: keyof typeof IconType
-	time: number
-	note?: string
-}
-
 type IstateUnite = {
-	income: Istate
-	outcome: Istate
+	income: IAcounDetailtProps
+	outcome: IAcounDetailtProps
 	currentSwiper: number
 }
 
@@ -40,7 +30,10 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 	moneyMaxLength: number
 	swiperParams: any
 	queryData: any
-	iconId: any
+	iconId: {
+		income: string | number
+		outcome: string | number
+	}
 	constructor(props: IAddOrModProps) {
 		super(props)
 		this.state = {
@@ -66,8 +59,8 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 		this.breakCategory()
 		this.queryData = tools.parseUrlSearch(this.props.location.search)
 		this.iconId = {
-			income: this.queryData.type === '0' || this.queryData.type === '2' ? undefined : this.queryData.cid,
-			outcome: this.queryData.type === '0' || this.queryData.type === '1' ? undefined : this.queryData.cid,
+			income: this.queryData.type === '0' || this.queryData.type === '2' ? '' : this.queryData.cid,
+			outcome: this.queryData.type === '0' || this.queryData.type === '1' ? '' : this.queryData.cid,
 		}
 		this.swiperParams = {
 			containerClass: style.swiperContainer,
@@ -88,7 +81,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 		console.log(tools.parseUrlSearch(this.props.location.search))
 		const queryData = this.queryData
 		// 0-new 1-income 2-outcome
-		let income: Istate = {
+		let income: IAcounDetailtProps = {
 			id: this.incomeCategories[0].id,
 			paymentType: this.incomeCategories[0].type,
 			moeny: '0',
@@ -96,7 +89,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 			icon: this.incomeCategories[0].icon,
 			time: Date.now(),
 		}
-		let outcome: Istate = {
+		let outcome: IAcounDetailtProps = {
 			id: this.outcomeCategories[0].id,
 			paymentType: this.outcomeCategories[0].type,
 			moeny: '0',
@@ -130,6 +123,8 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 			outcome,
 			currentSwiper: queryData.type == '1' ? 1 : 0,
 		})
+		this.iconId.income = this.iconId.income === '' ? this.incomeCategories[0].id : this.iconId.income
+		this.iconId.outcome = this.iconId.income === '' ? this.incomeCategories[0].id : this.iconId.outcome
 		if (this.queryData.type == '1') {
 			setTimeout(() => {
 				swiperEl.slideTo(1)
@@ -138,7 +133,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 	}
 	handleSelected = (slectItem: ICategory): void => {
 		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
-		const newData: Istate = JSON.parse(JSON.stringify(this.state[currentType]))
+		const newData: IAcounDetailtProps = JSON.parse(JSON.stringify(this.state[currentType]))
 		this.iconId[currentType] = slectItem.id
 		newData.id = slectItem.id
 		newData.category = slectItem.name
@@ -175,14 +170,14 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 				moeny += value
 			}
 		}
-		const newData: Istate = JSON.parse(JSON.stringify(this.state[currentType]))
+		const newData: IAcounDetailtProps = JSON.parse(JSON.stringify(this.state[currentType]))
 		newData.moeny = moeny
 		this.state.currentSwiper === 1 ? this.setState({ income: newData }) : this.setState({ outcome: newData })
 	}
 	handleDeleted = (clearFlag = false): void => {
 		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
 		let moeny = this.state[currentType].moeny
-		const newData: Istate = JSON.parse(JSON.stringify(this.state[currentType]))
+		const newData: IAcounDetailtProps = JSON.parse(JSON.stringify(this.state[currentType]))
 		if (clearFlag) {
 			newData.moeny = '0'
 			this.state.currentSwiper === 1 ? this.setState({ income: newData }) : this.setState({ outcome: newData })
@@ -213,25 +208,15 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 			cid: this.iconId.income,
 		}
 		if (this.queryData.type === '0') {
-			if (this.state.currentSwiper === 0) {
-				addAccountItem(_outcome)
-			} else {
-				addAccountItem(_income)
-			}
+			this.state.currentSwiper === 0 ? addAccountItem(_outcome) : addAccountItem(_income)
+			this.props.history.go(-1)
 		} else if (this.queryData.type === '1') {
-			if (this.state.currentSwiper === 0) {
-				addAccountItem(_outcome)
-			} else {
-				addAccountItem(_income)
-			}
+			this.state.currentSwiper === 0 ? addAccountItem(_outcome) : updateAccountItem(_income)
+			this.props.history.go(-2)
 		} else {
-			if (this.state.currentSwiper === 0) {
-				updateAccountItem(_outcome)
-			} else {
-				addAccountItem(_income)
-			}
+			this.state.currentSwiper === 0 ? updateAccountItem(_outcome) : addAccountItem(_income)
+			this.props.history.go(-2)
 		}
-		this.props.history.go(-2)
 	}
 	handleTabChange = (infos: { value: string | number; label: string }): void => {
 		console.log(infos)
@@ -266,7 +251,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
-							currentIconId={this.iconId.outcome}
+							defaultIconId={this.queryData.type === '0' || this.queryData.type === '1' ? '' : this.queryData.cid}
 							iconArr={this.outcomeCategories}
 							ItemClass={style.outcomeActive}
 						/>
@@ -301,7 +286,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
-							currentIconId={this.iconId.income}
+							defaultIconId={this.queryData.type === '0' || this.queryData.type === '2' ? '' : this.queryData.cid}
 							iconArr={this.incomeCategories}
 							ItemClass={style.incomeActive}
 						/>

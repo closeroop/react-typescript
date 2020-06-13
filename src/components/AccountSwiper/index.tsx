@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, useEffect, memo, useMemo } from 'react'
 import PropType from 'prop-types'
 import classnames from 'classnames'
 import Swiper from 'react-id-swiper'
@@ -11,19 +11,23 @@ import style from './index.module.scss'
 
 interface Iprops {
 	iconArr: ICategory[]
-	currentIconId?: string | number
+	defaultIconId?: string | number
 	onIconClick?: (item: ICategory) => void
 	ItemClass?: string
 }
 
 const AccountSwiper: React.FC<Iprops> = props => {
-	const [currentIconId, setIconId] = useState(props.currentIconId ? props.currentIconId : props.iconArr[0].id)
-	// console.log('sw', props.currentIconId ? props.currentIconId : props.iconArr[0].id)
+	let mimiSwiper: any
+	let currentSwiper = 0
+	const [currentIconId, setIconId] = useState(props.iconArr[0].id)
 	const activeClass = props.ItemClass ? props.ItemClass : style.iconActive
 	const swiperParams = {
 		pagination: {
 			el: '.swiper-pagination',
 			clickable: false,
+		},
+		getSwiper($el: any) {
+			mimiSwiper = $el
 		},
 	}
 	const swiperPage = Array(Math.ceil(props.iconArr.length / 10) | 0).fill(0)
@@ -33,11 +37,26 @@ const AccountSwiper: React.FC<Iprops> = props => {
 		}
 		setIconId(iconInfo.id)
 	}
+	const currenSwiperFn = useMemo(() => {
+		let iconIndex = 0
+		props.iconArr.forEach((item, index) => {
+			if (item.id === props.defaultIconId) {
+				iconIndex = index
+			}
+		})
+		return (iconIndex / 10) | 0
+	}, [])
 	useEffect(() => {
-		if (typeof props.currentIconId !== 'undefined' && props.currentIconId !== currentIconId) {
-			setIconId(props.currentIconId)
+		if (props.defaultIconId && props.defaultIconId !== currentIconId) {
+			setIconId(props.defaultIconId)
 		}
-	}, [props.currentIconId])
+		if (currentSwiper !== currenSwiperFn) {
+			currentSwiper = currenSwiperFn
+			setTimeout(() => {
+				mimiSwiper.slideTo(currentSwiper)
+			}, 0)
+		}
+	}, [])
 	return (
 		<Swiper {...swiperParams}>
 			{swiperPage.map((index, key) => (
@@ -66,17 +85,9 @@ const AccountSwiper: React.FC<Iprops> = props => {
 
 AccountSwiper.propTypes = {
 	iconArr: PropType.array.isRequired,
-	currentIconId: PropType.oneOfType([PropType.string, PropType.number]),
+	defaultIconId: PropType.oneOfType([PropType.string, PropType.number]),
 	onIconClick: PropType.func,
 	ItemClass: PropType.string,
 }
 
-export default memo(AccountSwiper, function (pre, next) {
-	console.log(
-		pre.currentIconId,
-		next.currentIconId,
-		'Swiper',
-		pre.currentIconId === next.currentIconId ? '没渲染' : '渲染了'
-	)
-	return pre.currentIconId === next.currentIconId
-})
+export default memo(AccountSwiper)

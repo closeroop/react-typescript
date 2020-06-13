@@ -17,7 +17,7 @@ type IHomeProps = RouteComponentProps & IAppContext
 
 class HomePage extends Component<IHomeProps> {
 	public state: {
-		accountData: any[]
+		accountData: IAcount[]
 		categories: any[]
 	}
 	constructor(props: IHomeProps) {
@@ -26,6 +26,7 @@ class HomePage extends Component<IHomeProps> {
 			accountData: props.accountTable.accountList,
 			categories: tools.flatternArr(props.accountTable.category, 'id'),
 		}
+		console.log(tools.flatternArr(props.accountTable.category, 'id'))
 	}
 	handleItemClick = (item: ItemIProps): void => {
 		const icon = this.props.accountTable.category.find(_item => _item.icon == item.icon)
@@ -37,19 +38,18 @@ class HomePage extends Component<IHomeProps> {
 	render(): JSX.Element {
 		let todayIncome = 0,
 			todayOutcome = 0
-		const itemWithCate: PaymentProps[] = this.state.accountData.map(item => {
-			// eslint-disable-next-line prettier/prettier
-			(item as any).category = this.state.categories[item.cid].name;
-			// eslint-disable-next-line prettier/prettier
-			(item as any).icon = this.state.categories[item.cid].icon;
-			// eslint-disable-next-line prettier/prettier
-			(item as any).paymentType = this.state.categories[item.cid].type
-			if ((item as any).paymentType === paymentType.Income) {
+		const itemWithCate = this.state.accountData.map(item => {
+			const _item = item as any
+			const { categories } = this.state
+			_item.category = categories[item.cid as any].name
+			_item.icon = categories[item.cid as any].icon
+			_item.paymentType = categories[item.cid as any].type
+			if (_item.paymentType === paymentType.Income) {
 				todayIncome += +item.moeny
 			} else {
 				todayOutcome += +item.moeny
 			}
-			return item
+			return _item
 		})
 		console.log(itemWithCate)
 		//

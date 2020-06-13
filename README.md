@@ -32,6 +32,7 @@
 ### <b>文档</b>
 <ul>
   <li> <a href="./chapter/part-01.md">1. 项目目录结构安排 </a> 
+  <li> <a href="./chapter/part-0S.md">2. 项目的一些说明 </a> 
   <li> <a href="./chapter/part-02.md">2. 项目图标选择和 AccountIcon 组件编写</a> 
   <li> <a href="./chapter/part-03.md">3. StatisticsBox 首页头部支出收入编写</a> 
   <li> <a href="./chapter/part-04.md">4. AccountItem 账目信息组件编写</a> 
@@ -42,6 +43,6 @@
   <li> <a href="./chapter/part-09.md">9. 添加和修改页之 swiper 组件封装</a>
   <li> <a href="./chapter/part-10.md">10. 添加和修改页之 keyboard 组件编写</a>
   <li> <a href="./chapter/part-11.md">11. 添加和修改页之 tab 组件编写</a>
-  <li> 12. 添加和修改页之 组件联动
+  <li> <a href="./chapter/part-12.md">12. 添加和修改页之 组件联动</a>
   <li> 13. 账单记录页分析和编写
 </ul>
