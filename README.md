@@ -28,7 +28,7 @@
 <b>注：2-6步骤不是必须的！</b>
 
 ### <b>进度</b>
-  <a href="./chapter/part-00.md">目前的开发进度截图</a>
+  <a href="./snapshot/video.mp4">目前的开发录屏</a>
 ### <b>文档</b>
 <ul>
   <li> <a href="./chapter/part-01.md">1. 项目目录结构安排 </a> 
