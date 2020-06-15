@@ -56,8 +56,8 @@ iconId: {
 根据queryData解析后的参数 type 判断当前我们需要进行的操作 <br />
 
 0 - 添加操作: 对 state 的 income 和 outcome 初始化默认值<br />
-1 - 修改收入操作: 对 state 的 income 初始化默认值 outcome 使用路由传递的参数 <br />
-2 - 修改支出操作: 对 state 的 outcome 初始化默认值 income 使用路由传递的参数 <br />
+1 - 修改收入操作: 对 state 的 income 初始化默认值, outcome 使用路由传递的参数 <br />
+2 - 修改支出操作: 对 state 的 outcome 初始化默认值, income 使用路由传递的参数 <br />
 
 根据 type 的值初始化 state 的 currentSwiper 值<br />
 初始化 iconId 的值<br />

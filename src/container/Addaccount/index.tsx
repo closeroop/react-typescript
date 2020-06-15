@@ -124,7 +124,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 			currentSwiper: queryData.type == '1' ? 1 : 0,
 		})
 		this.iconId.income = this.iconId.income === '' ? this.incomeCategories[0].id : this.iconId.income
-		this.iconId.outcome = this.iconId.income === '' ? this.incomeCategories[0].id : this.iconId.outcome
+		this.iconId.outcome = this.iconId.outcome === '' ? this.outcomeCategories[0].id : this.iconId.outcome
 		if (this.queryData.type == '1') {
 			setTimeout(() => {
 				swiperEl.slideTo(1)
