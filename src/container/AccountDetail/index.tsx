@@ -25,7 +25,7 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 		console.log(this.queryData, 's')
 	}
 	// 防抖 200ms
-	handleModify = tools._debounce(() => {
+	handleModify = tools._throttle(() => {
 		this.queryData.type = this.queryData.paymentType
 		this.props.history.push('/AddAccount?' + tools.qs(this.queryData))
 		console.log('/AddAccount?' + tools.qs(this.queryData))

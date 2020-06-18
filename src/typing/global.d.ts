@@ -8,7 +8,7 @@ interface ITools {
 	formatMoney: (money?: number | string, gapTag?: string, decimal?: number, gap?: number) => string
 	formatTime: (date: number | undefined, type?: formatTimType) => string
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	_debounce: (fn: (...arg: any[]) => any, gap: number | undefined) => any
+	_throttle: (fn: (...arg: any[]) => any, gap: number | undefined) => any
 	qs: (needQsData: { [index: string]: any }) => string
 	parseUrlSearch: (search: string) => { [index: string]: string }
 	flatternArr: <U, T extends keyof U>(array: U[], attribute: T) => any

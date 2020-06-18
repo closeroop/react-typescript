@@ -1,4 +1,5 @@
 ### <b>说明</b>
+---
 俗话说：学以致用，学了typescript不应用到实际的一个项目中，提升不会很大；刚好之前学了react相关的知识。干脆结合一下写个不大不小的应用。<br />
 记录下写的过程，感觉网上react结合typescript的教程挺少的，所以应该也会犯一些错误。<br />
 推荐一本国外react结合typescript的书，有一定基础的人看比较合适：<a href="http://www.java1234.com/a/javabook/webbase/2018/1219/12596.html">《Learn React with TypeScript 3》</a>
@@ -10,6 +11,7 @@
 </ul>
 
 ### <b>初始化项目</b>
+---
 1.使用官方脚手架工具 npx create-react-app app-name --tempalte typescript <br/>
 2.安装eslint代码检查工具 -> npm i eslint -D
   <ul>
@@ -28,8 +30,11 @@
 <b>注：2-6步骤不是必须的！</b>
 
 ### <b>进度</b>
+
   <a href="./chapter/part-00.md">目前的开发录截图</a>
+
 ### <b>文档</b>
+---
 <ul>
   <li> <a href="./chapter/part-01.md">1. 项目目录结构安排 </a> 
   <li> <a href="./chapter/part-0S.md">2. 项目的一些说明 </a> 

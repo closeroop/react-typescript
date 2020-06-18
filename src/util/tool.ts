@@ -70,7 +70,7 @@ function formatTime(date: number | undefined, type: formatTimType = 1): string {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function _debounce(fn: (...arg: any[]) => any, gap = 200): any {
+function _throttle(fn: (...arg: any[]) => any, gap = 200): any {
 	let start: number = Date.now(),
 		end: number
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -84,6 +84,30 @@ function _debounce(fn: (...arg: any[]) => any, gap = 200): any {
 		}
 	}
 }
+// function _throttle(fn: (...arg: any[]) => any, awit = 200, endflag = false): any {
+// 	let start: number = Date.now()
+// 	let time: NodeJS.Timeout | null = null
+// 	return function (this: void, ...arg: any[]) {
+// 		// eslint-disable-next-line @typescript-eslint/no-this-alias
+// 		const context = this
+// 		const args = arg
+// 		const now = Date.now()
+// 		if (now - start > awit) {
+// 			start = now
+// 			fn.apply(context, args)
+// 			if (endflag && time) {
+// 				clearTimeout(time)
+// 				time = null
+// 			}
+// 		}
+// 		if (endflag && time == null) {
+// 			time = setTimeout(function () {
+// 				time = null
+// 				fn.apply(context, args)
+// 			}, awit)
+// 		}
+// 	}
+// }
 
 function qs(needQsData: { [index: string]: any }): string {
 	const qsSttring: string[] = []
@@ -109,4 +133,4 @@ function flatternArr<U, T extends keyof U>(array: U[], attribute: T): any {
 	}, {} as any)
 }
 
-export default { formatMoney, formatTime, _debounce, qs, parseUrlSearch, flatternArr }
+export default { formatMoney, formatTime, _throttle, qs, parseUrlSearch, flatternArr }
