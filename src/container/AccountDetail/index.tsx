@@ -4,6 +4,7 @@ import style from './index.module.scss'
 import withContent from './../withContext'
 
 import AccountItem from './../../components/AccountItem'
+import Adialog from './../../components/Dialog'
 
 import { IProps as PaymentProps } from './../../components/AccountItem'
 import { IAppContext, IAcount, ICategory } from './../../App'
@@ -14,15 +15,24 @@ interface IRouteProps {
 	id?: string
 }
 
-class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppContext> {
+interface Istate {
+	isShowDialog: boolean
+}
+
+class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppContext, Istate> {
 	queryData: any
-	constructor(props: RouteComponentProps & IAppContext) {
+	constructor(props: RouteComponentProps<IRouteProps> & IAppContext) {
 		super(props)
-		// this.state = {
-		// 	id: this.props.match.params.id,
-		// }
+		this.state = {
+			isShowDialog: false,
+		}
 		this.queryData = tools.parseUrlSearch(props.location.search)
 		console.log(this.queryData, 's')
+	}
+	handleConfirm = () => {
+		this.setState({
+			isShowDialog: false,
+		})
 	}
 	// 防抖 200ms
 	handleModify = tools._throttle(() => {
@@ -60,6 +70,7 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 					}}>
 					修改
 				</button>
+				<Adialog isOpen={this.state.isShowDialog} okBtnConfig={{ callBack: this.handleConfirm, text: '确定' }} />
 			</div>
 		)
 	}

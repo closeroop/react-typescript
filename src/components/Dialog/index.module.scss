@@ -1,0 +1,55 @@
+.dialogBox{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  z-index: 999;
+  transition: display ease-in-out .2s;
+}
+.dialogContent{
+  margin: auto;
+  width: 5.4rem;
+  text-align: center;
+  letter-spacing: .02rem;
+  color: $color-3;
+  background-color: #fff;
+  border-radius: .16rem;
+  padding-top: .18rem;
+  overflow: hidden;
+  .title{
+    font-size: .32rem;
+    font-weight: 650;
+    color: $color-2;
+    line-height: .84rem;
+    padding: 0 .32rem;
+    letter-spacing: .04rem;
+    margin: 0;
+  }
+  .content{
+    font-size: .28rem;
+    line-height: .32rem;
+    padding: .16rem .32rem;
+    min-height: .64rem;
+  }
+  .btns{
+    display: flex;
+    @include border-top-1px(0, 0);
+    font-size: .3rem;
+    button {
+      all: unset;
+      letter-spacing: .04rem;
+      flex: 1;
+      line-height: .96rem;
+      transition: background-color ease-in-out .2s;
+      &:active {
+        background-color: rgb(238, 238, 238);
+      }
+    }
+    .okBtn{
+      color: $color-primary;
+    }
+  }
+}

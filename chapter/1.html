@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="1.js"></script>
+</head>
+<body>
+  <script>
+    let t = new NP((resolve, reject) => {
+      setTimeout(() => {
+        reject(3)
+      }, 1000)
+    })
+    t.then((value)=>{
+      // return new NP((resolve, reject) => {
+      //   resolve(value)
+      // })
+      return value
+    }, (reason) => {
+      console.log(reason)
+      return new NP((resolve, reject) => {
+        resolve(8)
+      })
+    })
+    .then()
+    .then((value)=>{
+      console.log('then21v', value)
+      return value
+    },(reason) => {
+      console.log('then22r', reason)
+      return reason
+    })
+    console.log(1)
+  </script>
+</body>
+</html>
