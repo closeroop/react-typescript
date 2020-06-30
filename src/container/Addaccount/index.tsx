@@ -10,6 +10,7 @@ import AccountItem from './../../components/AccountItem'
 import AccountSwiper from './../../components/AccountSwiper'
 import KeyBoard from './../../components/KeyBoard'
 import Tab, { TabItem } from './../../components/AccountTab'
+import Adialog from './../../components/Dialog'
 
 import { paymentType as PaymentType, IProps as IAcounDetailtProps } from './../../components/AccountItem/index'
 import { IAppContext, ICategory } from './../../App'
@@ -20,6 +21,7 @@ type IstateUnite = {
 	income: IAcounDetailtProps
 	outcome: IAcounDetailtProps
 	currentSwiper: number
+	isShowDialog: boolean
 }
 
 let swiperEl: any
@@ -54,6 +56,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 				time: 0,
 			},
 			currentSwiper: 0, // 后期路由判断
+			isShowDialog: false,
 		}
 		this.moneyMaxLength = 9
 		this.breakCategory()
@@ -82,39 +85,35 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 		const queryData = this.queryData
 		// 0-new 1-income 2-outcome
 		let income: IAcounDetailtProps = {
-			id: this.incomeCategories[0].id,
+			id: 0,
 			paymentType: this.incomeCategories[0].type,
 			moeny: '0',
 			category: this.incomeCategories[0].name,
 			icon: this.incomeCategories[0].icon,
-			time: Date.now(),
 		}
 		let outcome: IAcounDetailtProps = {
-			id: this.outcomeCategories[0].id,
+			id: 0,
 			paymentType: this.outcomeCategories[0].type,
 			moeny: '0',
 			category: this.outcomeCategories[0].name,
 			icon: this.outcomeCategories[0].icon,
-			time: Date.now(),
 		}
 		if (queryData.type !== '0') {
 			if (queryData.type === '2') {
 				outcome = {
-					id: queryData.id,
+					id: +queryData.id,
 					paymentType: +queryData.paymentType,
 					moeny: queryData.moeny,
 					category: queryData.category,
 					icon: queryData.icon as keyof typeof IconType,
-					time: +queryData.time,
 				}
 			} else {
 				income = {
-					id: queryData.id,
+					id: +queryData.id,
 					paymentType: +queryData.paymentType,
 					moeny: queryData.moeny,
 					category: queryData.category,
 					icon: queryData.icon as keyof typeof IconType,
-					time: +queryData.time,
 				}
 			}
 		}
@@ -135,7 +134,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
 		const newData: IAcounDetailtProps = JSON.parse(JSON.stringify(this.state[currentType]))
 		this.iconId[currentType] = slectItem.id
-		newData.id = slectItem.id
+		newData.id = this.state[currentType].id
 		newData.category = slectItem.name
 		newData.paymentType = slectItem.type
 		newData.icon = slectItem.icon
@@ -195,6 +194,13 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 	}
 	handleConfirm = (): void => {
 		const { addAccountItem, updateAccountItem } = this.props.actions
+		if (
+			(this.state.currentSwiper === 0 && +this.state.outcome.moeny === 0) ||
+			(this.state.currentSwiper === 1 && +this.state.income.moeny === 0)
+		) {
+			this.setState({ isShowDialog: true })
+			return
+		}
 		const _outcome = {
 			id: this.state.outcome.id,
 			time: this.state.outcome.time,
@@ -208,12 +214,16 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 			cid: this.iconId.income,
 		}
 		if (this.queryData.type === '0') {
+			_outcome.id = Date.now()
+			_income.id = Date.now()
 			this.state.currentSwiper === 0 ? addAccountItem(_outcome) : addAccountItem(_income)
 			this.props.history.go(-1)
 		} else if (this.queryData.type === '1') {
+			_outcome.id = Date.now()
 			this.state.currentSwiper === 0 ? addAccountItem(_outcome) : updateAccountItem(_income)
 			this.props.history.go(-2)
 		} else {
+			_income.id = Date.now()
 			this.state.currentSwiper === 0 ? updateAccountItem(_outcome) : addAccountItem(_income)
 			this.props.history.go(-2)
 		}
@@ -247,7 +257,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 				<Swiper {...this.swiperParams}>
 					<section className={style.addDetail}>
 						<div style={{ padding: '0 .12rem', backgroundColor: '#fff' }}>
-							<AccountItem {...outcome} formatMoney={false} time={undefined} />
+							<AccountItem {...outcome} formatMoney={false} />
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
@@ -282,7 +292,7 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 					</section>
 					<section className={style.addDetail}>
 						<div style={{ padding: '0 .12rem', backgroundColor: '#fff' }}>
-							<AccountItem {...income} formatMoney={false} time={undefined} />
+							<AccountItem {...income} formatMoney={false} />
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
@@ -316,6 +326,17 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 						</div>
 					</section>
 				</Swiper>
+				<Adialog
+					isOpen={this.state.isShowDialog}
+					type='alert'
+					content='开什么玩笑？0元？'
+					okBtnConfig={{
+						callBack: () => {
+							this.setState({ isShowDialog: false })
+						},
+						text: '对不起',
+					}}
+				/>
 			</div>
 		)
 	}

@@ -34,7 +34,21 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 			isShowDialog: false,
 		})
 	}
+	handleCancel = () => {
+		this.setState({
+			isShowDialog: false,
+		})
+	}
 	// 防抖 200ms
+	handleDelete = tools._throttle(() => {
+		this.setState({
+			isShowDialog: true,
+		})
+		return
+		this.queryData.type = this.queryData.paymentType
+		this.props.history.push('/AddAccount?' + tools.qs(this.queryData))
+		console.log('/AddAccount?' + tools.qs(this.queryData))
+	}, 200)
 	handleModify = tools._throttle(() => {
 		this.queryData.type = this.queryData.paymentType
 		this.props.history.push('/AddAccount?' + tools.qs(this.queryData))
@@ -63,14 +77,25 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 						<div className={style.itemRight}>{tools.formatTime(Number(IconProps.time))}</div>
 					</div>
 				</section>
-				<button
-					className={style.footerBtn}
-					onClick={e => {
-						this.handleModify(e)
-					}}>
-					修改
-				</button>
-				<Adialog isOpen={this.state.isShowDialog} okBtnConfig={{ callBack: this.handleConfirm, text: '确定' }} />
+				<section className={style.footerBtn}>
+					<button className={style.btnDelete} onClick={this.handleDelete}>
+						删除
+					</button>
+					<button
+						className={style.btnConfirm}
+						onClick={e => {
+							this.handleModify(e)
+						}}>
+						修改
+					</button>
+				</section>
+				<Adialog
+					isOpen={this.state.isShowDialog}
+					type='confirm'
+					content='确定要删除该记录？'
+					cancelBtnConfig={{ callBack: this.handleCancel, text: '取消' }}
+					okBtnConfig={{ callBack: this.handleConfirm, text: '确定' }}
+				/>
 			</div>
 		)
 	}

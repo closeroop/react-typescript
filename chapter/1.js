@@ -1,5 +1,3 @@
-const { symbol } = require('prop-types')
-
 class promise {
 	static pendding = 'pendding'
 	static rejected = 'rejected'

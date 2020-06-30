@@ -65,7 +65,7 @@ class Dialog extends React.Component<IDialog> {
 							onClick={this.props.cancelBtnConfig!.callBack}
 							style={{
 								display: this.props.type === 'alert' ? 'none' : 'block',
-								borderLeft: '.02rem solid rgb(214, 214, 214)',
+								borderRight: '0.02rem solid rgb(234, 234, 234)',
 							}}>
 							{this.props.cancelBtnConfig!.text}
 						</button>
