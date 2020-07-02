@@ -26,11 +26,34 @@
     position: relative;
     // padding: 0 .12rem;
   }
+  .accountItem{
+    padding: 0 .12rem;
+    background-color: #fff;
+    position: relative;
+    z-index: 200;
+  }
   .addFooter{
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 100;
+    .tips{
+      display: flex;
+      background-color: #fefefe;
+      font-size: .28rem;
+      line-height: .6rem;
+      padding: .12rem .26rem;
+    }
+    .note{
+      flex: 1;
+      color: $color-7;
+      padding-right: .12rem;
+    }
+    .time{
+      width: auto;
+      text-align: right;
+    }
   }
   .outcomeActive{
     background-color: $theme-color-green!important;
@@ -39,5 +62,34 @@
   .incomeActive{
     background-color: $theme-color-yellow!important;
     color: #fff!important;
+  }
+}
+.KeyBoardIn{
+  animation: KeyBoardIn .3s ease-in-out;
+}
+.KeyBoardOut{
+  animation: KeyBoardOut .5s ease-in-out forwards;
+}
+@keyframes KeyBoardIn{
+  from {
+    transform: translateY(40%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes KeyBoardOut{
+  from {
+    transform: translateY(0);
+    opacity: 1;
+    position: relative;
+    margin-top: 2rem;
+  }
+  to {
+    transform: translateY(40%);
+    opacity: 0;
+    top: 100%;
   }
 }

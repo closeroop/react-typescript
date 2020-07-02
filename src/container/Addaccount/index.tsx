@@ -13,7 +13,7 @@ import Tab, { TabItem } from './../../components/AccountTab'
 import Adialog from './../../components/Dialog'
 
 import { paymentType as PaymentType, IProps as IAcounDetailtProps } from './../../components/AccountItem/index'
-import { IAppContext, ICategory } from './../../App'
+import { IAppContext, ICategory, IAcount } from './../../App'
 
 type IAddOrModProps = RouteComponentProps & IAppContext
 
@@ -22,6 +22,7 @@ type IstateUnite = {
 	outcome: IAcounDetailtProps
 	currentSwiper: number
 	isShowDialog: boolean
+	isShowNoteBox: boolean
 }
 
 let swiperEl: any
@@ -55,8 +56,9 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 				icon: 'food',
 				time: 0,
 			},
-			currentSwiper: 0, // 后期路由判断
+			currentSwiper: 0, // 路由判断
 			isShowDialog: false,
+			isShowNoteBox: false,
 		}
 		this.moneyMaxLength = 9
 		this.breakCategory()
@@ -84,19 +86,24 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 		console.log(tools.parseUrlSearch(this.props.location.search))
 		const queryData = this.queryData
 		// 0-new 1-income 2-outcome
+		const idAndTime = Date.now()
 		let income: IAcounDetailtProps = {
-			id: 0,
+			id: idAndTime,
 			paymentType: this.incomeCategories[0].type,
 			moeny: '0',
 			category: this.incomeCategories[0].name,
 			icon: this.incomeCategories[0].icon,
+			time: idAndTime,
+			note: '',
 		}
 		let outcome: IAcounDetailtProps = {
-			id: 0,
+			id: idAndTime,
 			paymentType: this.outcomeCategories[0].type,
 			moeny: '0',
 			category: this.outcomeCategories[0].name,
 			icon: this.outcomeCategories[0].icon,
+			time: idAndTime,
+			note: '',
 		}
 		if (queryData.type !== '0') {
 			if (queryData.type === '2') {
@@ -106,6 +113,8 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 					moeny: queryData.moeny,
 					category: queryData.category,
 					icon: queryData.icon as keyof typeof IconType,
+					time: +queryData.id,
+					note: queryData.note,
 				}
 			} else {
 				income = {
@@ -114,6 +123,8 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 					moeny: queryData.moeny,
 					category: queryData.category,
 					icon: queryData.icon as keyof typeof IconType,
+					time: +queryData.id,
+					note: queryData.note,
 				}
 			}
 		}
@@ -148,6 +159,21 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 				this.outcomeCategories.push(item)
 			}
 		})
+	}
+	handleNoteClick = (): void => {
+		this.setState({
+			isShowNoteBox: true,
+		})
+		this.hiddenKeyBoard()
+	}
+	handleNoteAdd = (value?: string): void => {
+		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
+		const newData: IAcounDetailtProps = JSON.parse(JSON.stringify(this.state[currentType]))
+		newData.note = value
+		this.state.currentSwiper === 1
+			? this.setState({ income: newData, isShowNoteBox: false })
+			: this.setState({ outcome: newData, isShowNoteBox: false })
+		this.showKeyBoard()
 	}
 	handleEnter = (value: string): void => {
 		const currentType = this.state.currentSwiper === 1 ? 'income' : 'outcome'
@@ -201,29 +227,27 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 			this.setState({ isShowDialog: true })
 			return
 		}
-		const _outcome = {
+		const _outcome: IAcount = {
 			id: this.state.outcome.id,
 			time: this.state.outcome.time,
 			moeny: this.state.outcome.moeny,
 			cid: this.iconId.outcome,
+			note: this.state.outcome.note,
 		}
-		const _income = {
+		const _income: IAcount = {
 			id: this.state.income.id,
 			time: this.state.income.time,
 			moeny: this.state.income.moeny,
 			cid: this.iconId.income,
+			note: this.state.income.note,
 		}
 		if (this.queryData.type === '0') {
-			_outcome.id = Date.now()
-			_income.id = Date.now()
 			this.state.currentSwiper === 0 ? addAccountItem(_outcome) : addAccountItem(_income)
 			this.props.history.go(-1)
 		} else if (this.queryData.type === '1') {
-			_outcome.id = Date.now()
 			this.state.currentSwiper === 0 ? addAccountItem(_outcome) : updateAccountItem(_income)
 			this.props.history.go(-2)
 		} else {
-			_income.id = Date.now()
 			this.state.currentSwiper === 0 ? updateAccountItem(_outcome) : addAccountItem(_income)
 			this.props.history.go(-2)
 		}
@@ -234,6 +258,24 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 			swiperEl.slideTo(1)
 		} else {
 			swiperEl.slideTo(0)
+		}
+	}
+	hiddenKeyBoard = () => {
+		const doms: HTMLCollection = document.getElementsByClassName(style.addFooter)
+		for (let index = 0; index < doms.length; index++) {
+			// eslint-disable-next-line prettier/prettier
+			(doms[index] as HTMLDivElement).classList.remove(style.KeyBoardIn);
+			// eslint-disable-next-line prettier/prettier
+			(doms[index] as HTMLDivElement).classList.add(style.KeyBoardOut);
+		}
+	}
+	showKeyBoard = () => {
+		const doms: HTMLCollection = document.getElementsByClassName(style.addFooter)
+		for (let index = 0; index < doms.length; index++) {
+			// eslint-disable-next-line prettier/prettier
+			(doms[index] as HTMLDivElement).classList.remove(style.KeyBoardOut);
+			// eslint-disable-next-line prettier/prettier
+			(doms[index] as HTMLDivElement).classList.add(style.KeyBoardIn);
 		}
 	}
 	// shouldComponentUpdate(nextProps: RouteComponentProps, nextState: IstateUnite): boolean {
@@ -256,8 +298,8 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 				</div>
 				<Swiper {...this.swiperParams}>
 					<section className={style.addDetail}>
-						<div style={{ padding: '0 .12rem', backgroundColor: '#fff' }}>
-							<AccountItem {...outcome} formatMoney={false} />
+						<div className={style.accountItem}>
+							<AccountItem {...outcome} formatMoney={false} time={undefined} />
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
@@ -265,16 +307,12 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 							iconArr={this.outcomeCategories}
 							ItemClass={style.outcomeActive}
 						/>
-						<div className={style.addFooter}>
-							<div
-								style={{
-									fontSize: '.28rem',
-									lineHeight: '.6rem',
-									backgroundColor: '#fefefe',
-									textAlign: 'right',
-									padding: '.12rem .26rem',
-								}}>
-								{tools.formatTime(outcome.time, 4)}
+						<div className={style.addFooter + ' ' + style.KeyBoardIn}>
+							<div className={style.tips}>
+								<div className={style.note + ' nowrap'} onClick={this.handleNoteClick}>
+									注: {outcome.note ? outcome.note : '点击输入备注'}
+								</div>
+								<div className={style.time}>{tools.formatTime(outcome.time, 4)}</div>
 							</div>
 							<KeyBoard
 								okBtnColor='#07C160'
@@ -291,8 +329,8 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 						</div>
 					</section>
 					<section className={style.addDetail}>
-						<div style={{ padding: '0 .12rem', backgroundColor: '#fff' }}>
-							<AccountItem {...income} formatMoney={false} />
+						<div className={style.accountItem}>
+							<AccountItem {...income} formatMoney={false} time={undefined} />
 						</div>
 						<AccountSwiper
 							onIconClick={this.handleSelected}
@@ -300,16 +338,12 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 							iconArr={this.incomeCategories}
 							ItemClass={style.incomeActive}
 						/>
-						<div className={style.addFooter}>
-							<div
-								style={{
-									fontSize: '.28rem',
-									lineHeight: '.6rem',
-									backgroundColor: '#fefefe',
-									textAlign: 'right',
-									padding: '.12rem .26rem',
-								}}>
-								{tools.formatTime(income.time, 4)}
+						<div className={style.addFooter + ' ' + style.KeyBoardIn}>
+							<div className={style.tips}>
+								<div className={style.note + ' nowrap'} onClick={this.handleNoteClick}>
+									注: {income.note ? income.note : '点击输入备注'}
+								</div>
+								<div className={style.time}>{tools.formatTime(income.time, 4)}</div>
 							</div>
 							<KeyBoard
 								okBtnColor='#ffd31a'
@@ -335,6 +369,25 @@ class Addaccount extends Component<IAddOrModProps, IstateUnite> {
 							this.setState({ isShowDialog: false })
 						},
 						text: '对不起',
+					}}
+				/>
+				<Adialog
+					isOpen={this.state.isShowNoteBox}
+					type='textarea'
+					title='添加备注'
+					content={currentSwiper === 1 ? income.note : outcome.note}
+					okBtnConfig={{
+						callBack: value => {
+							this.handleNoteAdd(value)
+						},
+						text: '确定',
+					}}
+					cancelBtnConfig={{
+						callBack: () => {
+							this.setState({ isShowNoteBox: false })
+							this.showKeyBoard()
+						},
+						text: '取消',
 					}}
 				/>
 			</div>

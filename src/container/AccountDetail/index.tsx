@@ -5,9 +5,10 @@ import withContent from './../withContext'
 
 import AccountItem from './../../components/AccountItem'
 import Adialog from './../../components/Dialog'
+import Icon from './../../components/AccountIcon'
 
 import { IProps as PaymentProps } from './../../components/AccountItem'
-import { IAppContext, IAcount, ICategory } from './../../App'
+import { IAppContext } from './../../App'
 
 // 为RouteComponentProps传递带有id的match接口，否者使用id会报错
 
@@ -33,6 +34,8 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 		this.setState({
 			isShowDialog: false,
 		})
+		this.props.actions.delAccountItem(this.queryData.id)
+		this.props.history.go(-1)
 	}
 	handleCancel = () => {
 		this.setState({
@@ -44,10 +47,6 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 		this.setState({
 			isShowDialog: true,
 		})
-		return
-		this.queryData.type = this.queryData.paymentType
-		this.props.history.push('/AddAccount?' + tools.qs(this.queryData))
-		console.log('/AddAccount?' + tools.qs(this.queryData))
 	}, 200)
 	handleModify = tools._throttle(() => {
 		this.queryData.type = this.queryData.paymentType
@@ -61,7 +60,7 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 			icon: this.queryData.icon,
 			paymentType: +this.queryData.paymentType,
 			moeny: this.queryData.moeny,
-			time: this.queryData.moeny ? this.queryData.moeny : 0,
+			time: this.queryData.time,
 			note: this.queryData.note ? this.queryData.note : '',
 		}
 		return (
@@ -79,14 +78,14 @@ class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppCon
 				</section>
 				<section className={style.footerBtn}>
 					<button className={style.btnDelete} onClick={this.handleDelete}>
-						删除
+						<Icon name='delete' /> 删除
 					</button>
 					<button
 						className={style.btnConfirm}
 						onClick={e => {
 							this.handleModify(e)
 						}}>
-						修改
+						<Icon name='edit' /> 修改
 					</button>
 				</section>
 				<Adialog

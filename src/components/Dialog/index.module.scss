@@ -5,13 +5,13 @@
   top: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
   z-index: 999;
   transition: all ease-in-out .2s;
 }
 .dialogContent{
-  margin: auto;
   width: 5.4rem;
+  margin: 50vh auto;
+  transform: translateY(-50%);
   text-align: center;
   letter-spacing: .02rem;
   color: $color-3;
@@ -51,6 +51,67 @@
     }
     .okBtn{
       color: $color-primary;
+    }
+  }
+}
+.textareaContent{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  letter-spacing: .02rem;
+  color: $color-3;
+  background-color: #fff;
+  border-top-left-radius: .18rem;
+  border-top-right-radius: .18rem;
+  padding: .18rem .32rem .28rem;
+  box-sizing: border-box;
+  .title{
+    user-select: none;
+    font-size: .36rem;
+    font-weight: 650;
+    color: $color-2;
+    line-height: .84rem;
+    letter-spacing: .04rem;
+    margin: 0;
+  }
+  .content{
+    font-size: .28rem;
+    line-height: .32rem;
+    height: 2rem;
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: rgb(254, 254, 254);
+  }
+  .btns{
+    display: flex;
+    justify-content: space-between;
+    font-size: .32rem;
+    text-align: center;
+    user-select: none;
+    button {
+      all: unset;
+      letter-spacing: .04rem;
+      width: 46%;
+      line-height: .76rem;
+      transition: background-color ease-in-out .2s;
+      border-radius: .38rem;
+      border: 1px solid $color-green;
+      color: $color-green;
+      &:active {
+        border-color: darken($color-green, 5%);
+        color: darken($color-green, 5%);
+      }
+    }
+    .okBtn{
+      color: #fff;
+      border: none;
+      background-color: $theme-color-green;
+      &:active {
+        background-color: darken($theme-color-green, 5%);
+      }
     }
   }
 }

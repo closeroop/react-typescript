@@ -8,39 +8,50 @@ interface IDialog {
 	isOpen?: boolean
 	title?: string
 	content?: string
-	type?: 'alert' | 'confirm'
+	type?: 'alert' | 'confirm' | 'textarea'
 	okBtnConfig?: {
 		text?: string
-		callBack?: () => void
+		callBack?: (value?: string) => void
 	}
 	cancelBtnConfig?: {
 		text?: string
 		callBack?: () => void
 	}
 }
-
 const appRoot = document.getElementById('root')
 class Dialog extends React.Component<IDialog> {
 	static defaultProps: IDialog
 	static propTypes: any
 	el: HTMLDivElement
+	textarea: any
 	constructor(props: IDialog) {
 		super(props)
 		this.el = document.createElement('div')
+		this.textarea = React.createRef()
 	}
 	componentDidMount(): void {
 		if (this.props.isOpen) {
 			appRoot!.appendChild(this.el)
+			if (this.props.type === 'textarea') {
+				this.textarea.current.focus()
+			}
 		}
 	}
 	shouldComponentUpdate(nextProps: IDialog): boolean {
-		return nextProps.isOpen !== this.props.isOpen
+		return nextProps.isOpen !== this.props.isOpen || nextProps.content !== this.props.content
 	}
 	componentDidUpdate(): void {
 		if (!this.props.isOpen) {
-			appRoot!.removeChild(this.el)
+			if (appRoot!.contains(this.el)) {
+				appRoot!.removeChild(this.el)
+			}
 		} else {
+			console.log(this.props.content, 'cotnt')
 			appRoot!.appendChild(this.el)
+			if (this.props.type === 'textarea') {
+				this.textarea.current.value = this.props.content
+				this.textarea.current.focus()
+			}
 		}
 	}
 	componentWillUnmount(): void {
@@ -48,9 +59,20 @@ class Dialog extends React.Component<IDialog> {
 			appRoot!.removeChild(this.el)
 		}
 	}
+	handleTextAreaClick = (): void => {
+		const value = this.textarea.current.value || ''
+		if (typeof this.props.okBtnConfig!.callBack === 'function') {
+			this.props.okBtnConfig!.callBack(value)
+		}
+	}
 	handleOkBtnClick = (): void => {
 		if (typeof this.props.okBtnConfig!.callBack === 'function') {
 			this.props.okBtnConfig!.callBack()
+		}
+	}
+	handleCancelBtnClick = (): void => {
+		if (typeof this.props.cancelBtnConfig!.callBack === 'function') {
+			this.props.cancelBtnConfig!.callBack()
 		}
 	}
 	render(): JSX.Element {
@@ -62,7 +84,7 @@ class Dialog extends React.Component<IDialog> {
 					<div className={style.content}>{this.props.content}</div>
 					<div className={style.btns}>
 						<button
-							onClick={this.props.cancelBtnConfig!.callBack}
+							onClick={this.handleCancelBtnClick}
 							style={{
 								display: this.props.type === 'alert' ? 'none' : 'block',
 								borderRight: '0.02rem solid rgb(234, 234, 234)',
@@ -76,7 +98,28 @@ class Dialog extends React.Component<IDialog> {
 				</div>
 			</div>
 		)
-		return ReactDOM.createPortal(dialog, this.el)
+		const textarea = (
+			<div className={style.dialogBox}>
+				<div className={style.textareaContent}>
+					<h3 className={style.title}>{this.props.title}</h3>
+					<textarea
+						className={style.content}
+						maxLength={30}
+						defaultValue={this.props.content}
+						placeholder='输入备注（30字）'
+						autoFocus
+						ref={this.textarea}></textarea>
+					<div className={style.btns}>
+						<button onClick={this.handleCancelBtnClick}>{this.props.cancelBtnConfig!.text}</button>
+						<button className={style.okBtn} onClick={this.handleTextAreaClick}>
+							{this.props.okBtnConfig!.text}
+						</button>
+					</div>
+				</div>
+			</div>
+		)
+		const componemnt = this.props.type === 'textarea' ? textarea : dialog
+		return ReactDOM.createPortal(componemnt, this.el)
 	}
 }
 
@@ -99,7 +142,7 @@ Dialog.propTypes = {
 	isOpen: PropType.bool,
 	title: PropType.string,
 	content: PropType.string,
-	type: PropType.oneOf(['alert', 'confirm']),
+	type: PropType.oneOf(['alert', 'confirm', 'textarea']),
 	okBtnConfig: PropType.shape({
 		text: PropType.string,
 		callBack: PropType.func,

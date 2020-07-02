@@ -52,7 +52,7 @@ const AccountItem: React.FC<IProps> = props => {
 			</div>
 			<div className={style.itemContent + ' nowrap'}>
 				<h4>{props.category}</h4>
-				{props.note ? <p>{props.note}</p> : null}
+				{props.note ? <p className='nowrap'>{props.note}</p> : null}
 			</div>
 			<div className={style.itemInfo}>
 				{/* <span>{(props.paymentType === 2 ? '-' : '+') + tools.formatMoney(props.moeny)}</span> */}

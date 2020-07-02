@@ -1,44 +1,3 @@
-class promise {
-	static pendding = 'pendding'
-	static rejected = 'rejected'
-	static fulfilled = 'fulfilled'
-	status = promise.pendding
-	value = null
-	callback = []
-	constructor(fn) {
-		fn(this.resolve)
-	}
-	_handl = _callback => {
-		if (this.status === promise.pendding) {
-			this.callback.push(_callback)
-			return
-		}
-		if (!_callback.filfulled) {
-			_callback.resolve(this.value)
-			return
-		}
-		let r = _callback.filfulled(this.value)
-		_callback.resolve(r)
-	}
-	then(filfulled) {
-		return new promise(resolve => {
-			this._handl({
-				filfulled: filfulled,
-				resolve: resolve,
-			})
-		})
-	}
-	resolve = data => {
-		if (data instanceof promise) {
-			data.then.call(data, this.resolve)
-			return
-		}
-		this.status = promise.fulfilled
-		this.value = data
-		this.callback.forEach(fn => this._handl(fn))
-	}
-}
-
 function debounce(fn, awit, immediate) {
 	let time = null
 	return function () {
@@ -253,4 +212,68 @@ function deepClone(target) {
 		result = target
 	}
 	return result
+}
+function add(...arg) {
+	let args = arg
+	let adder = function (...arg2) {
+		return add.apply(null, args.concat(arg2))
+	}
+	adder.toString = function () {
+		return args.reduce((p, n) => {
+			return p + n
+		}, 0)
+	}
+	return adder
+}
+function LSC(word1 = '', word2 = '') {
+	let length1 = word1.length
+	let length2 = word2.length
+	let max = 0,
+		index = 0,
+		str = ''
+	let lcsarr = Array(length1 + 1).fill(0)
+	lcsarr.forEach((item, index) => {
+		lcsarr[index] = Array(length2 + 1).fill(0)
+	})
+	for (let i = 1; i <= length1; i++) {
+		for (let j = 1; j <= length2; j++) {
+			if (word1[i - 1] == word2[j - 1]) {
+				lcsarr[i][j] = lcsarr[i - 1][j - 1] + 1
+			} else {
+				lcsarr[i][j] = 0
+			}
+			if (max < lcsarr[i][j]) {
+				max = lcsarr[i][j]
+				index = i
+			}
+		}
+	}
+	if (max > 0) {
+		while (max--) {
+			str = word1[--index] + str
+		}
+	}
+	console.log(lcsarr)
+	return str
+}
+function react(obj, key, value) {
+	Object.defineProperty(obj, key, {
+		set(val) {
+			value = val
+			console.log(key, val)
+			observe(value)
+		},
+		get() {
+			return value
+		},
+	})
+}
+function observe(obj) {
+	if (typeof obj !== 'object' || obj === null) {
+		return
+	}
+	Object.keys(obj).forEach(key => {
+		observe(obj[key])
+		react(obj, key, obj[key])
+	})
 }

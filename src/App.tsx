@@ -67,7 +67,7 @@ const App: React.FC = () => {
 			})
 		},
 		delAccountItem: (id: number | string): void => {
-			const list = state.accountList.filter(item => item.id !== id)
+			const list = state.accountList.filter(item => String(item.id) !== String(id))
 			setState({
 				accountList: list,
 				category: state.category,
