@@ -6,6 +6,7 @@
 	<li> AccountSwiper
 	<li> AccountTab 
 	<li> KeyBoard
+	<li> Dialog
 </ul>
 前面已经将这几个组件实现，现在就通过一些方式将他们联动起来。
 
@@ -16,6 +17,8 @@ type IstateUnite = {
 	income: IAcounDetailtProps
 	outcome: IAcounDetailtProps
 	currentSwiper: number
+	isShowDialog: boolean // 警告对话框
+	isShowNoteBox: boolean // 备注对话框
 }
 ```
 由于添加修改页是可以左右滑动切换收入和支出的，因此我们需要分别定义 收入 和 支出 的数据状态，定义 currentSwiper 判断当前页面的类型，以及作为 AccountTab 组件的参数与其联动。
@@ -59,8 +62,11 @@ iconId: {
 1 - 修改收入操作: 对 state 的 income 初始化默认值, outcome 使用路由传递的参数 <br />
 2 - 修改支出操作: 对 state 的 outcome 初始化默认值, income 使用路由传递的参数 <br />
 
-根据 type 的值初始化 state 的 currentSwiper 值<br />
-初始化 iconId 的值<br />
+<ul>
+	<li>根据 type 的值初始化 state 的 currentSwiper 值<br />
+	<li>根据 type 的值初 切换页面到对应页面<br />
+	<li>初始化 iconId 的值<br />
+</ul>
 
 完成后 currentSwiper 作为 Tab组件的 current 参数， income 和 outcome 作为 AccountItem 的参数传入
 
@@ -73,7 +79,7 @@ KeyBoard 组件
 	<li> handleConfirm 
 </ul>
 
-所有的改变状态的操作都根据 currentSwiper 判断应该修改 imcome 还是 outcome 的值 <br />
+所有的改变状态的操作都根据 currentSwiper 的值判断应该修改 imcome 还是 outcome <br />
 
 AccountTab 组件
 
@@ -90,5 +96,9 @@ AccountSwiper 组件
 </ul>
 
 选择相应图标后，触发回调更新相应的状态 <br />
+
+Dialog 组件
+
+大同小异，主要控制对话框的关闭显示，已经数据的更新。
 
 传送门：<a href="./../src/container/Addaccount/index.tsx">添加修改页</a>

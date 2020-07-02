@@ -1,11 +1,11 @@
 ### <b>说明</b>
 ---
-俗话说：学以致用，学了typescript不应用到实际的一个项目中，提升不会很大；刚好之前学了react相关的知识。干脆结合一下写个不大不小的应用。<br />
+俗话说：学以致用，学了typescript不应用到实际的一个项目中，提升不会很大；于是打算结合react，写个不大不小的应用。<br />
 记录下写的过程，感觉网上react结合typescript的教程挺少的，所以应该也会犯一些错误。<br />
-推荐一本国外react结合typescript的书，有一定基础的人看比较合适：<a href="http://www.java1234.com/a/javabook/webbase/2018/1219/12596.html">《Learn React with TypeScript 3》</a>
+推荐一本国外react结合typescript的书，有一定的基础看比较合适：<a href="http://www.java1234.com/a/javabook/webbase/2018/1219/12596.html">《Learn React with TypeScript 3》</a>
 <ul>
   <li>1. webApp 界面参考了<b>我的记账本</b> 手机App(安卓)。App 参考截图放在了 snapshot 目录下。
-  <li>2. 项目目标是完成 `我的记账本` 的全部功能，使用 typescript 进行代码静态检查。
+  <li>2. 项目目标是完成 `我的记账本` 95%的功能，使用 typescript 进行代码静态检查。
   <li>3. 希望能够有所收获
   <li>4. 留言可转 closeroop@163.com
 </ul>
@@ -48,6 +48,25 @@
   <li> <a href="./chapter/part-09.md">9. 添加和修改页之 swiper 组件封装</a>
   <li> <a href="./chapter/part-10.md">10. 添加和修改页之 keyboard 组件编写</a>
   <li> <a href="./chapter/part-11.md">11. 添加和修改页之 tab 组件编写</a>
+  <li> <a href="./chapter/part-06.md">12. Dialog 组件编写</a>
   <li> <a href="./chapter/part-12.md">12. 添加和修改页之 组件联动</a>
   <li> 13. 账单记录页分析和编写
+</ul>
+
+### <b>记录更新（新增）</b>
+---
+
+2020-07-02
+<ul>
+  <li> 添加 [ 添加修改页 ] 键盘 进场动画
+  <li> 扩展 Dialog 组件，增加可输入状态
+  <li> 补充 [ 添加修改页 ] 备注修改添加的功能
+  <li> 补充账目详情页删除功能
+</ul>
+
+2020-07-01
+<ul>
+  <li> 修复添加修改页修改图标后项目 id 值取到图标 id 的问题
+  <li> 修复添加修改页修改项目后，新增项目id异常导致修改异常的问题
+  <li> 添加 Dialog 组件，用于信息提示
 </ul>

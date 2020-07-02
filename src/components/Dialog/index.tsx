@@ -23,7 +23,7 @@ class Dialog extends React.Component<IDialog> {
 	static defaultProps: IDialog
 	static propTypes: any
 	el: HTMLDivElement
-	textarea: any
+	textarea: React.RefObject<HTMLTextAreaElement>
 	constructor(props: IDialog) {
 		super(props)
 		this.el = document.createElement('div')
@@ -33,7 +33,7 @@ class Dialog extends React.Component<IDialog> {
 		if (this.props.isOpen) {
 			appRoot!.appendChild(this.el)
 			if (this.props.type === 'textarea') {
-				this.textarea.current.focus()
+				this.textarea.current!.focus()
 			}
 		}
 	}
@@ -46,11 +46,10 @@ class Dialog extends React.Component<IDialog> {
 				appRoot!.removeChild(this.el)
 			}
 		} else {
-			console.log(this.props.content, 'cotnt')
 			appRoot!.appendChild(this.el)
 			if (this.props.type === 'textarea') {
-				this.textarea.current.value = this.props.content
-				this.textarea.current.focus()
+				this.textarea.current!.value = this.props.content!
+				this.textarea.current!.focus()
 			}
 		}
 	}
@@ -60,7 +59,7 @@ class Dialog extends React.Component<IDialog> {
 		}
 	}
 	handleTextAreaClick = (): void => {
-		const value = this.textarea.current.value || ''
+		const value = this.textarea.current!.value || ''
 		if (typeof this.props.okBtnConfig!.callBack === 'function') {
 			this.props.okBtnConfig!.callBack(value)
 		}
@@ -77,7 +76,6 @@ class Dialog extends React.Component<IDialog> {
 	}
 	render(): JSX.Element {
 		const dialog = (
-			// <div className={style.dialogBox} style={{ display: this.props.isOpen! ? 'flex' : 'none' }}></div>
 			<div className={style.dialogBox}>
 				<div className={style.dialogContent}>
 					<h3 className={style.title}>{this.props.title}</h3>

@@ -64,14 +64,14 @@ type ITabContext = {
 <ul>
 	<li>handleTabItemClick: TabItem的状态改变后，触发Tab组件更新的回调函数</li>
 	<li>current: 当前 tabItem 的 id</li>
-	<li>onChange: 传入 Tab 组件，用于上一层组件回调的函数</li>
+	<li>onChange: 传入 Tab 组件的，用于上一层组件回调的函数</li>
 </ul>
 
 使用 TabContext.Provider 包裹需要共享数据的组件，  然后在组价内使用 useContext 获取数据和方法。
 
 #### 代码编写
 需要注意的地方： <br />
-我们希望 Tab 组件只包裹 TabItem 组件，如果遇到其他的组件则不不渲染，我们可以通过给 TabItem 组件添加 dispalyName 属性，然后在父组件 Tab 里判断
+我们希望 Tab 组件只包裹 TabItem 组件，如果遇到其他的组件则不渲染，我们可以通过给 TabItem 组件添加 dispalyName 属性，然后在父组件 Tab 里判断
 ```
 React.Children.map(props.children, (child, index) => {
 	const childElement = child as React.FunctionComponentElement<ITabItem>

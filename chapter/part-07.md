@@ -1,4 +1,23 @@
 ### <b>详情页面编写</b>
+详情页接收顶层共享数据，以及解析url参数获取账目的信息，我们需要通过一个高阶组件来包裹详情页组件，并传递顶层数据
+```
+import withContent from './../withContext'
+// .....
+export default withContent(AccountDetail)
+```
+在给 prpos 参数进行类型定义的时候，我们使用交叉类型进行定义，这样一来就有只能提示了
+```
+import { RouteComponentProps } from 'react-router-dom'
+interface IRouteProps {
+	id?: string
+}
+class AccountDetail extends Component<RouteComponentProps<IRouteProps> & IAppContext, Istate> {
+  //
+}
+```
+其他容器组件亦是这样处理，详情页的编写比较简单，没啥好说的。
+# 以下为旧文档内容，可作为知识点补充。
+### <b>详情页面编写</b>
 详情页面的布局和逻辑都十分简单，这里不过多讲述。但有一个值得注意的地方：我们使用了 react-router-dom 这个库作为路由组件。同时组件也提供了对应的声名文件，我们刚好可以使用它已经定义好的接口作为组件的 props 的接口。
 
 #### 使用 RouteComponentProps 作为组件 props 的接口
@@ -7,9 +26,6 @@
 详情页通过路由传参，使用工具函数进行解析得到数据。比较简单，没啥好说的。
 
 
-记录1.0 以下旧文档内容，可作为知识点补充。
-
------
 详情页面我们需要通过一个 id 知道当前账目的具体数据。在路由设计时我们设计了一个动态路由，路由的id参数可变。
 ```
 <Route path='/AccountDetail/:id' exact component={AccountDetail}></Route>

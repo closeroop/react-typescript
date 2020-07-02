@@ -15,18 +15,15 @@
 </ul>
 
 ```
-// 对传入图标数据定义接口规范（实际文件已经对公用接口进行了统一命名使用）
-interface IconProps {
-	id: string | number
-	name: string
-	type: number
-	icon: keyof typeof IconType
-}
+// 对传入图标数据定义接口规范
+
+import { ICategory } from './../../App' // 这是预定义的接口
 
 interface Iprops {
-	iconArr: IconProps[]
-	defaultIconId?: string // 默认高亮icon ID
-	onIconClick?: (item: IconProps) => void // 点击回调函数
+	iconArr: ICategory[]
+	defaultIconId?: string | number
+	onIconClick?: (item: ICategory) => void
+	ItemClass?: string
 }
 ```
 #### 组件state
